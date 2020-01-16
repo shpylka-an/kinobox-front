@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import Container from '@material-ui/core/Container';
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import React, { useCallback, useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import Container from '@material-ui/core/Container';
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { CurrentUserContext } from "../../contexts/currentUser";
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -30,19 +32,28 @@ const LoginPage = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [currentUser, dispatch] = useContext(CurrentUserContext)
 
     const handleSubmit = async e => {
         e.preventDefault();
+        login()
+    };
 
+    const login = useCallback(async () => {
         const res = await axios.post('http://localhost:8000/api/auth/login', {
             username,
             password
         });
 
-        console.log(res.data);
-    };
+        dispatch({type: 'SET_AUTHORIZED', payload: res.data.user})
+
+    }, [username, password, dispatch])
 
     const classes = useStyles();
+
+    if (currentUser.isLoggedIn) {
+        return <Redirect to='/dashboard'/>
+    }
 
     return (
         <Container component='main' maxWidth='xs'>

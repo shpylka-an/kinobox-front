@@ -5,16 +5,19 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import Routes from './routes'
 import NavBar from "./components/NavBar";
+import { CurrentUserProvider } from './contexts/currentUser';
 
 const theme = createMuiTheme();
 
 const App = () => (
     <MuiThemeProvider theme={theme}>
         <CssBaseline />
-        <Router>
-            <NavBar />
-            <Routes />
-        </Router>
+        <CurrentUserProvider>
+            <Router>
+                <NavBar />
+                <Routes />
+            </Router>
+        </CurrentUserProvider>
     </MuiThemeProvider>
 );
 
