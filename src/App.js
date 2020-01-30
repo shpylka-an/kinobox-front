@@ -6,6 +6,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import Routes from './routes'
 import NavBar from "./components/NavBar";
 import { CurrentUserProvider } from './contexts/currentUser';
+import CurrentUserChecker from "./components/CurrentUserChecker";
 
 const theme = createMuiTheme();
 
@@ -13,10 +14,12 @@ const App = () => (
     <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <CurrentUserProvider>
-            <Router>
+            <CurrentUserChecker>
+              <Router>
                 <NavBar />
                 <Routes />
-            </Router>
+              </Router>
+            </CurrentUserChecker>
         </CurrentUserProvider>
     </MuiThemeProvider>
 );
