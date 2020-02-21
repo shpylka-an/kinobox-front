@@ -16,7 +16,7 @@ const App = () => (
         <CurrentUserProvider>
             <CurrentUserChecker>
               <Router>
-                <NavBar />
+                {/*<NavBar />*/}
                 <Routes />
               </Router>
             </CurrentUserChecker>
