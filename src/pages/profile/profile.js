@@ -1,15 +1,17 @@
-import React, { useContext } from "react";
-import { CurrentUserContext } from "../../contexts/currentUser";
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 const Profile = () => {
-    const [currentUser] = useContext(CurrentUserContext)
+  const { currentUser } = useSelector(state => state.auth)
 
-    return (
-        <div>
-            <h1>Profile</h1>
-            <p>Welcome back {currentUser.currentUser ? currentUser.currentUser.email : ''}</p>
-        </div>
-    )
+  return (
+    <div>
+      <h1>Profile</h1>
+      <p>
+        {`Welcome back ${currentUser && currentUser.username}`}
+      </p>
+    </div>
+  )
 }
 
 export default Profile

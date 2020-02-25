@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import Container from '@material-ui/core/Container';
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Grid from "@material-ui/core/Grid";
-import Link from "@material-ui/core/Link";
-import TextField from "@material-ui/core/TextField";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from '@material-ui/core/styles';
-import { CurrentUserContext } from "../../contexts/currentUser";
-import useHttp from "../../hooks/useHttp";
+import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
+import Container from '@material-ui/core/Container'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Grid from '@material-ui/core/Grid'
+import Link from '@material-ui/core/Link'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
+import { login } from '../../actions/auth'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -26,78 +26,63 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2)
   }
-}));
+}))
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { isLoggedIn } = useSelector(state => state.auth)
+  const dispatch = useDispatch()
+  const classes = useStyles()
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [currentUser, dispatch] = useContext(CurrentUserContext)
-  const {loading, makeRequest} = useHttp()
+  const handleSubmit = e => {
+    e.preventDefault()
+    dispatch(login(email, password)())
+  }
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    try {
-      const loginData = await makeRequest('POST', 'auth/login', {
-        email, password
-      })
-
-      localStorage.setItem('token', loginData.access_token)
-
-      const userData = await makeRequest('POST', 'users/current')
-
-      dispatch({type: 'SET_AUTHORIZED', payload: userData})
-    } catch (e) {
-      alert(e.message)
-    }
-  };
-
-  const classes = useStyles();
-
-  if (currentUser.isLoggedIn) {
-    return <Redirect to='/dashboard'/>
+  if (isLoggedIn) {
+    return <Redirect to="/profile" />
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
-        <Typography component='h1' variant='h5'>
+        <Typography component="h1" variant="h5">
           Sign in
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
-            variant='outlined'
-            margin='normal'
+            variant="outlined"
+            margin="normal"
             required
             fullWidth
-            label='Email'
-            name='email'
+            label="Email"
+            name="email"
             autoFocus
             onChange={e => setEmail(e.target.value)}
           />
           <TextField
-            variant='outlined'
-            margin='normal'
+            variant="outlined"
+            margin="normal"
             required
             fullWidth
-            name='password'
-            label='Password'
-            type='password'
-            autoComplete='current-password'
+            name="password"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
             onChange={e => setPassword(e.target.value)}
           />
           <FormControlLabel
-            control={<Checkbox value='remember' color='primary'/>}
-            label='Remember me'
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
           />
           <Button
-            type='submit'
+            type="submit"
             fullWidth
-            variant='contained'
-            color='primary'
+            variant="contained"
+            color="primary"
             className={classes.submit}
-            disabled={loading}
+            disabled={false}
           >
             Sign in
           </Button>
@@ -117,6 +102,6 @@ const LoginPage = () => {
       </div>
     </Container>
   )
-};
+}
 
-export default LoginPage;
+export default LoginPage
