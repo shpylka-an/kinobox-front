@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -37,7 +38,7 @@ const LoginPage = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    dispatch(login(email, password)())
+    dispatch(login(email, password))
   }
 
   if (isLoggedIn) {
@@ -93,7 +94,7 @@ const LoginPage = () => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link component={RouterLink} to="/register" variant="body2">
                 Don't have an account? Sign Up
               </Link>
             </Grid>

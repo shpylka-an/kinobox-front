@@ -13,7 +13,7 @@ export const authLogout = () => {
   }
 }
 
-export const login = (email, password) => () => async dispatch => {
+export const login = (email, password) => async dispatch => {
   const res = await Http.post('auth/login', {
     email,
     password
@@ -33,4 +33,10 @@ export const authCheck = () => async dispatch => {
   } else {
     dispatch(authLogout())
   }
+}
+
+export const register = credentials => async dispatch => {
+  const response = await Http.post('auth/register', credentials)
+  localStorage.setItem('token', response.data.accessToken)
+  dispatch(authLogin(response.data.user))
 }

@@ -7,9 +7,7 @@ const Profile = () => {
   return (
     <div>
       <h1>Profile</h1>
-      <p>
-        {`Welcome back ${currentUser && currentUser.username}`}
-      </p>
+      <p>{`Welcome back ${currentUser && currentUser.username}`}</p>
     </div>
   )
 }
