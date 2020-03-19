@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { login } from '../../actions/auth'
+import { getValidationErrors } from '../../utils/validation'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { isLoggedIn } = useSelector(state => state.auth)
+  const { isLoggedIn, isFetching, errors } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const classes = useStyles()
 
@@ -61,6 +62,8 @@ const LoginPage = () => {
             name="email"
             autoFocus
             onChange={e => setEmail(e.target.value)}
+            error={!!getValidationErrors(errors, 'email')}
+            helperText={getValidationErrors(errors, 'email')}
           />
           <TextField
             variant="outlined"
@@ -72,6 +75,8 @@ const LoginPage = () => {
             type="password"
             autoComplete="current-password"
             onChange={e => setPassword(e.target.value)}
+            error={!!getValidationErrors(errors, 'password')}
+            helperText={getValidationErrors(errors, 'password')}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -83,7 +88,7 @@ const LoginPage = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
-            disabled={false}
+            disabled={isFetching}
           >
             Sign in
           </Button>

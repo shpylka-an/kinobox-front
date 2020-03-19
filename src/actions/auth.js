@@ -1,8 +1,22 @@
 import Http from '../utils/Http'
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from './types/auth'
 
-export const authLogin = payload => {
+export const requestLogin = () => {
   return {
-    type: 'AUTH_LOGIN',
+    type: LOGIN_REQUEST
+  }
+}
+
+export const receiveLogin = payload => {
+  return {
+    type: LOGIN_SUCCESS,
+    payload
+  }
+}
+
+export const loginError = payload => {
+  return {
+    type: LOGIN_FAILURE,
     payload
   }
 }
@@ -14,22 +28,26 @@ export const authLogout = () => {
 }
 
 export const login = (email, password) => async dispatch => {
-  const res = await Http.post('auth/login', {
-    email,
-    password
-  })
+  dispatch(requestLogin())
+  try {
+    const res = await Http.post('auth/login', {
+      email,
+      password
+    })
 
-  const token = res.data.accessToken
+    const token = res.data.accessToken
+    localStorage.setItem('token', token)
 
-  localStorage.setItem('token', token)
-
-  dispatch(authLogin(res.data.user))
+    dispatch(receiveLogin(res.data.user))
+  } catch (error) {
+    dispatch(loginError(error.response.data.message))
+  }
 }
 
 export const authCheck = () => async dispatch => {
   if (!!localStorage.getItem('token')) {
     const user = await Http.get('users/current')
-    dispatch(authLogin(user.data))
+    dispatch(receiveLogin(user.data))
   } else {
     dispatch(authLogout())
   }
@@ -38,5 +56,5 @@ export const authCheck = () => async dispatch => {
 export const register = credentials => async dispatch => {
   const response = await Http.post('auth/register', credentials)
   localStorage.setItem('token', response.data.accessToken)
-  dispatch(authLogin(response.data.user))
+  dispatch(receiveLogin(response.data.user))
 }
