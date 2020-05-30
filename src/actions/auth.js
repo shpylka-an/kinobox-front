@@ -34,12 +34,14 @@ export const login = (email, password) => async dispatch => {
       email,
       password
     })
+    console.log(res)
 
     const token = res.data.accessToken
     localStorage.setItem('token', token)
 
     dispatch(receiveLogin(res.data.user))
   } catch (error) {
+    console.log(error)
     dispatch(loginError(error.response.data.message))
   }
 }
