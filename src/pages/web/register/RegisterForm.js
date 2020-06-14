@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { register } from '../../actions/auth'
+import { register } from '../../../actions/auth'
 import { Link as RouterLink, Redirect } from 'react-router-dom'
 import { Container } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'

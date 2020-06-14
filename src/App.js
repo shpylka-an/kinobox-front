@@ -5,7 +5,6 @@ import { CssBaseline } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import Routes from './routes'
-import NavBar from './components/NavBar'
 import store from './store'
 import { authCheck } from './actions/auth'
 
@@ -18,7 +17,6 @@ const App = () => (
     <CssBaseline />
     <Provider store={store}>
       <Router>
-        <NavBar />
         <Routes />
       </Router>
     </Provider>

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 const Profile = () => {
   const { currentUser } = useSelector(state => state.auth)
+  console.log(currentUser)
 
   return (
     <div>
