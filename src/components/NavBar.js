@@ -10,29 +10,31 @@ import { makeStyles } from '@material-ui/core/styles'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import { useSelector, useDispatch } from 'react-redux'
-import { authLogout } from '../actions/auth'
+import { logoutRequest } from '../actions/auth'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+    textDecoration: 'none',
+    color: '#fff',
+  },
 }))
 
 const NavBar = ({ location }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
-  const { isLoggedIn, currentUser } = useSelector(state => state.auth)
+  const { isLoggedIn, currentUser } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   const open = Boolean(anchorEl)
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
@@ -41,8 +43,7 @@ const NavBar = ({ location }) => {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    dispatch(authLogout())
+    dispatch(logoutRequest())
   }
 
   const NavLink = ({ to, title }) => (
@@ -54,20 +55,17 @@ const NavBar = ({ location }) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
+        <Typography
+          component={Link}
+          to={'/'}
+          variant="h6"
+          className={classes.title}
         >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" className={classes.title}>
-          News
+          Kinobox
         </Typography>
         <NavLink to="/" title="Home" />
         {!isLoggedIn && <NavLink to="/login" title="Login" />}
-        {isLoggedIn && (
+        {currentUser && (
           <div>
             <IconButton
               aria-label="account of current user"
@@ -76,7 +74,6 @@ const NavBar = ({ location }) => {
               onClick={handleMenu}
               color="inherit"
             >
-              {currentUser.username}
               <AccountCircle />
             </IconButton>
             <Menu
@@ -84,17 +81,21 @@ const NavBar = ({ location }) => {
               anchorEl={anchorEl}
               anchorOrigin={{
                 vertical: 'top',
-                horizontal: 'right'
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right'
+                horizontal: 'right',
               }}
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose} component={Link} to="/profile">
+              <MenuItem
+                onClick={handleClose}
+                component={Link}
+                to="/admin/profile"
+              >
                 Profile
               </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>

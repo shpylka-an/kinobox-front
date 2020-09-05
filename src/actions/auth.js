@@ -1,62 +1,73 @@
 import Http from '../utils/Http'
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from './types/auth'
+import {
+  AUTH_CHECK_FAILURE,
+  AUTH_CHECK_REQUEST,
+  AUTH_CHECK_SUCCESS,
+  LOGIN_FAILURE,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGOUT_REQUEST,
+  LOAD_CURRENT_USER_REQUEST,
+  LOAD_CURRENT_USER_SUCCESS,
+  LOAD_CURRENT_USER_FAILURE
+} from './types/auth'
 
-export const requestLogin = () => {
-  return {
-    type: LOGIN_REQUEST
-  }
-}
+export const loginRequest = credentials => ({
+  type: LOGIN_REQUEST,
+  payload:  credentials
+})
 
-export const receiveLogin = payload => {
-  return {
-    type: LOGIN_SUCCESS,
-    payload
-  }
-}
+export const loginSuccess = currentUser => ({
+  type: LOGIN_SUCCESS,
+  payload: currentUser
+})
 
-export const loginError = payload => {
-  return {
-    type: LOGIN_FAILURE,
-    payload
-  }
-}
+export const loginFailure = payload => ({
+  type: LOGIN_FAILURE,
+  payload
+})
 
-export const authLogout = () => {
-  return {
-    type: 'AUTH_LOGOUT'
-  }
-}
+export const logoutRequest = () => ({
+  type: LOGOUT_REQUEST
+})
 
-export const login = (email, password) => async dispatch => {
-  dispatch(requestLogin())
-  try {
-    const res = await Http.post('auth/login', {
-      email,
-      password
-    })
-    console.log(res)
+export const authCheckRequest = () => ({
+  type: AUTH_CHECK_REQUEST,
+})
 
-    const token = res.data.accessToken
-    localStorage.setItem('token', token)
+export const authCheckSuccess = () => ({
+  type: AUTH_CHECK_SUCCESS,
+})
 
-    dispatch(receiveLogin(res.data.user))
-  } catch (error) {
-    console.log(error)
-    dispatch(loginError(error.response.data.message))
-  }
-}
+export const authCheckFailure = () => ({
+  type: AUTH_CHECK_FAILURE,
+})
 
-export const authCheck = () => async dispatch => {
+export const loadCurrentUserRequest = () => ({
+  type: LOAD_CURRENT_USER_REQUEST
+})
+
+export const loadCurrentUserSuccess = currentUser => ({
+  type: LOAD_CURRENT_USER_SUCCESS,
+  payload: currentUser
+})
+
+export const loadCurrentUserFailure = () => ({
+  type: LOAD_CURRENT_USER_FAILURE
+})
+
+export const fetchCurrentUser = () => async dispatch => {
   if (!!localStorage.getItem('token')) {
-    const user = await Http.get('users/current')
-    dispatch(receiveLogin(user.data))
+    dispatch(authCheckRequest(true))
+    const user = await Http.get('me')
+    dispatch(loginSuccess(user.data))
   } else {
-    dispatch(authLogout())
+    dispatch(logoutRequest())
   }
 }
 
 export const register = credentials => async dispatch => {
   const response = await Http.post('auth/register', credentials)
   localStorage.setItem('token', response.data.accessToken)
-  dispatch(receiveLogin(response.data.user))
+  dispatch(loginSuccess(response.data.user))
 }

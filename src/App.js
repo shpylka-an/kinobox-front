@@ -3,14 +3,13 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-
 import Routes from './routes'
 import store from './store'
-import { authCheck } from './actions/auth'
+import { authCheckRequest } from './actions/auth'
+
+store.dispatch(authCheckRequest())
 
 const theme = createMuiTheme()
-
-store.dispatch(authCheck())
 
 const App = () => (
   <MuiThemeProvider theme={theme}>

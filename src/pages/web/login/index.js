@@ -11,7 +11,7 @@ import Link from '@material-ui/core/Link'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import { login } from '../../../actions/auth'
+import { login, loginRequest } from '../../../actions/auth'
 import { getValidationErrors } from '../../../utils/validation'
 
 const useStyles = makeStyles(theme => ({
@@ -39,7 +39,7 @@ const LoginPage = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    dispatch(login(email, password))
+    dispatch(loginRequest({email, password}))
   }
 
   if (isLoggedIn) {
