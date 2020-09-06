@@ -1,9 +1,10 @@
 import React from "react"
+import AdminNavBar from '../components/AdminNavBar'
 
 const AdminLayout = ({children}) => {
   return (
     <>
-      <h1>Admin Layout</h1>
+      <AdminNavBar />
       {children}
     </>
   )
