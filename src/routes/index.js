@@ -1,31 +1,20 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import HomePage from '../pages/web/home'
 import LoginPage from '../pages/web/login'
 import Profile from '../pages/web/profile/profile'
 import RegisterForm from '../pages/web/register'
 import DefaultLayout from '../layouts/DefaultLayout'
-import AdminLayout from '../layouts/AdminLayout'
 import PrivateRoute from './PrivateRoute'
+import Index from '../pages/admin'
+import RouteWrapper from './RouteWrapper'
 
 export default () => (
   <Switch>
-    <Route path='/admin/:path?' exact>
-      <AdminLayout>
-        <Switch>
-          <PrivateRoute path="/admin/profile" component={Profile} exact />
-        </Switch>
-      </AdminLayout>
-    </Route>
-
-    <Route>
-      <DefaultLayout>
-        <Switch>
-          <Route path="/" component={HomePage} exact />
-          <Route path="/login" component={LoginPage} exact />
-          <Route path="/register" component={RegisterForm} exact />
-        </Switch>
-      </DefaultLayout>
-    </Route>
+    <RouteWrapper path="/" component={HomePage} layout={DefaultLayout} exact />
+    <Route path="/admin" component={Index} exact />
+    <PrivateRoute path="/admin/profile" component={Profile} exact />
+    <RouteWrapper path="/login" component={LoginPage} exact />
+    <RouteWrapper path="/register" component={RegisterForm} exact />
   </Switch>
 )

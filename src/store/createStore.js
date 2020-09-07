@@ -3,14 +3,15 @@ import { adminReducer, adminSaga, USER_LOGOUT } from 'react-admin'
 import createSagaMiddleware from 'redux-saga'
 import { all, fork } from 'redux-saga/effects';
 import { routerMiddleware, connectRouter } from 'connected-react-router';
-import rootReducer from '../reducers'
+import reducers from '../reducers'
+import sagas from '../sagas'
 
 export default ({ authProvider, dataProvider, history }) => {
   const reducer = combineReducers({
     admin: adminReducer,
     router: connectRouter(history),
     // add your own reducers here
-    rootReducer,
+    ...reducers,
   })
 
   const resettableAppReducer = (state, action) =>
@@ -21,6 +22,7 @@ export default ({ authProvider, dataProvider, history }) => {
       [
         adminSaga(dataProvider, authProvider),
         // add your own sagas here
+        ...sagas
       ].map(fork)
     )
   }
