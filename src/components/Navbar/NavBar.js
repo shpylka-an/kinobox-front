@@ -38,14 +38,11 @@ const NavBar = ({ location }) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <StyledTypography
-          component={Link}
-          to={'/'}
-          variant="h6"
-        >
+        <StyledTypography component={Link} to={'/'} variant="h6">
           Kinobox
         </StyledTypography>
         <NavLink to="/" title="Home" />
+        <NavLink to="/admin" title="Admin" />
         {!isLoggedIn && <NavLink to="/login" title="Login" />}
         {currentUser && (
           <div>
@@ -73,14 +70,14 @@ const NavBar = ({ location }) => {
               open={open}
               onClose={handleClose}
             >
+              <MenuItem onClick={handleClose} component={Link} to="/profile">
+                Profile
+              </MenuItem>
               <MenuItem
                 onClick={handleClose}
                 component={Link}
-                to="/admin/profile"
+                to="/dashboard/movies"
               >
-                Profile
-              </MenuItem>
-              <MenuItem onClick={handleClose} component={Link} to='/admin'>
                 Dashboard
               </MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>

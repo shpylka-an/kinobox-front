@@ -1,7 +1,7 @@
 import React from 'react'
 import PrivateRoute from './PrivateRoute'
 
-const RouteWrapper = ({ component: Component, layout: Layout }, ...rest) => {
+const PrivateRouteWrapper = ({ component: Component, layout: Layout }, ...rest) => {
   return (
     <PrivateRoute
       {...rest}
@@ -14,4 +14,4 @@ const RouteWrapper = ({ component: Component, layout: Layout }, ...rest) => {
   )
 }
 
-export default RouteWrapper
+export default PrivateRouteWrapper

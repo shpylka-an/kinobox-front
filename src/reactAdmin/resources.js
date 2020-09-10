@@ -7,7 +7,7 @@ export default () => {
       name: 'movies',
       hasList: true,
       hasEdit: true,
-      hasShow: false,
+      hasShow: true,
       hasCreate: true,
     })
   )
