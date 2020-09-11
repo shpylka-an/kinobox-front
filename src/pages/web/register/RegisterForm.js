@@ -1,29 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { register } from '../../../actions/auth'
+import { useFormik } from 'formik'
 import { Link as RouterLink, Redirect } from 'react-router-dom'
 import { Container } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
+import Paper from '@material-ui/core/Paper'
+
 import useStyles from './styles'
+import { registerRequest } from '../../../actions/auth'
 
 const RegisterForm = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirmation, setPasswordConfirmation] = useState('')
-
-  const { isLoggedIn } = useSelector(state => state.auth)
+  const { isLoggedIn } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   const classes = useStyles()
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    dispatch(register({ username, email, password, passwordConfirmation }))
-  }
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+    },
+    onSubmit: (values) => {
+      dispatch(registerRequest(values))
+    },
+  })
 
   if (isLoggedIn) {
     return <Redirect to="/profile" />
@@ -31,11 +36,15 @@ const RegisterForm = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
+      <Paper className={classes.paper}>
         <Typography ocmponent="h1" variant="h5">
           Sign Up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={formik.handleSubmit}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -44,7 +53,8 @@ const RegisterForm = () => {
             label="Username"
             name="username"
             autoFocus
-            onChange={e => setUsername(e.target.value)}
+            onChange={formik.handleChange}
+            value={formik.values.username}
           />
           <TextField
             variant="outlined"
@@ -53,7 +63,8 @@ const RegisterForm = () => {
             fullWidth
             label="Email"
             name="email"
-            onChange={e => setEmail(e.target.value)}
+            onChange={formik.handleChange}
+            value={formik.values.email}
           />
           <TextField
             variant="outlined"
@@ -62,7 +73,9 @@ const RegisterForm = () => {
             fullWidth
             label="Password"
             name="password"
-            onChange={e => setPassword(e.target.value)}
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
           />
           <TextField
             variant="outlined"
@@ -71,7 +84,9 @@ const RegisterForm = () => {
             fullWidth
             label="Password confirmation"
             name="passwordConfirmation"
-            onChange={e => setPasswordConfirmation(e.target.value)}
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.passwordConfirmation}
           />
           <Button
             variant="contained"
@@ -86,7 +101,7 @@ const RegisterForm = () => {
             Already have an account? Sign In
           </Link>
         </form>
-      </div>
+      </Paper>
     </Container>
   )
 }

@@ -1,19 +1,24 @@
 import {
   AUTH_CHECK_FAILURE,
   AUTH_CHECK_SUCCESS,
+  LOAD_CURRENT_USER_FAILURE,
+  LOAD_CURRENT_USER_SUCCESS,
   LOGIN_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGOUT_REQUEST,
-  LOAD_CURRENT_USER_SUCCESS,
-  LOAD_CURRENT_USER_FAILURE,
+  REGISTER_FAILURE,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
 } from '../actions/types/auth'
 
 const initialState = {
   isLoggedIn: false,
-  isFetching: false,
+  isLoginFetching: false,
+  isRegisterFetching: false,
   currentUser: null,
-  errors: null,
+  loginErrors: null,
+  registerErrors: null,
 }
 
 export const auth = (state = initialState, action) => {
@@ -21,21 +26,40 @@ export const auth = (state = initialState, action) => {
     case LOGIN_REQUEST:
       return {
         ...state,
-        isFetching: true,
+        isLoginFetching: true,
       }
     case LOGIN_SUCCESS:
       return {
         ...state,
         isLoggedIn: true,
-        isFetching: false,
+        isLoginFetching: false,
         currentUser: action.payload,
-        errors: null,
+        loginErrors: null,
       }
     case LOGIN_FAILURE:
       return {
         ...state,
-        errors: action.payload,
-        isFetching: false,
+        loginErrors: action.payload,
+        isLoginFetching: false,
+      }
+    case REGISTER_REQUEST:
+      return {
+        ...state,
+        isRegisterFetching: true,
+      }
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        isLoggedIn: true,
+        isRegisterFetching: false,
+        currentUser: action.payload,
+        registerErrors: null,
+      }
+    case REGISTER_FAILURE:
+      return {
+        ...state,
+        registerErrors: action.payload,
+        isRegisterFetching: false,
       }
     case LOGOUT_REQUEST:
       return {

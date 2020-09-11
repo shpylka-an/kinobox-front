@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import Typography from '@material-ui/core/Typography'
+
 import { logoutRequest } from '../../actions/auth'
 import { useStyles } from './styles'
 
@@ -48,9 +49,12 @@ const NavBar = ({ location }) => {
         >
           Kinobox
         </Typography>
-        <NavLink to="/" title="Home" />
-        <NavLink to="/admin" title="Admin" />
-        {!isLoggedIn && <NavLink to="/login" title="Login" />}
+        {!isLoggedIn && (
+          <>
+            <NavLink to="/register" title="Sign up" />
+            <NavLink to="/login" title="Sign in" />
+          </>
+        )}
         {currentUser && (
           <div>
             <IconButton

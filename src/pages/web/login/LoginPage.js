@@ -18,7 +18,9 @@ import { useStyles } from './styles'
 
 const LoginPage = () => {
   const classes = useStyles()
-  const { isLoggedIn, isFetching, errors } = useSelector((state) => state.auth)
+  const { isLoggedIn, isLoginFetching, loginErrors } = useSelector(
+    (state) => state.auth
+  )
   const dispatch = useDispatch()
 
   const formik = useFormik({
@@ -56,8 +58,8 @@ const LoginPage = () => {
             autoFocus
             onChange={formik.handleChange}
             value={formik.values.email}
-            error={!!getValidationErrors(errors, 'email')}
-            helperText={getValidationErrors(errors, 'email')}
+            error={!!getValidationErrors(loginErrors, 'email')}
+            helperText={getValidationErrors(loginErrors, 'email')}
           />
           <TextField
             variant="outlined"
@@ -70,8 +72,8 @@ const LoginPage = () => {
             autoComplete="current-password"
             onChange={formik.handleChange}
             value={formik.values.password}
-            error={!!getValidationErrors(errors, 'password')}
-            helperText={getValidationErrors(errors, 'password')}
+            error={!!getValidationErrors(loginErrors, 'password')}
+            helperText={getValidationErrors(loginErrors, 'password')}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -83,7 +85,7 @@ const LoginPage = () => {
             fullWidth
             variant="contained"
             color="primary"
-            disabled={isFetching}
+            disabled={isLoginFetching}
           >
             Sign in
           </Button>

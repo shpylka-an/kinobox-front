@@ -1,29 +1,31 @@
-import { call, put, takeEvery, take } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import {
   AUTH_CHECK_REQUEST,
+  LOAD_CURRENT_USER_REQUEST,
   LOGIN_REQUEST,
   LOGOUT_REQUEST,
-  LOAD_CURRENT_USER_REQUEST,
+  REGISTER_REQUEST,
 } from '../actions/types/auth'
-import { login, me } from '../api/login'
+import { login, me, register } from '../api/login'
 import {
   authCheckFailure,
   authCheckSuccess,
+  loadCurrentUserFailure,
+  loadCurrentUserRequest,
+  loadCurrentUserSuccess,
   loginFailure,
   loginSuccess,
-  loadCurrentUserFailure,
-  loadCurrentUserSuccess,
-  loadCurrentUserRequest,
+  registerFailure,
+  registerSuccess,
 } from '../actions/auth'
 
 function* workerLogin(action) {
   try {
     const response = yield call(login, action.payload)
+    const { access_token: accessToken, user } = response.data
 
-    const token = response.data.access_token
-    localStorage.setItem('token', token)
-
-    yield put(loginSuccess(response.data.user))
+    localStorage.setItem('token', accessToken)
+    yield put(loginSuccess(user))
   } catch (error) {
     yield put(loginFailure(error.response.data.message))
   }
@@ -52,9 +54,22 @@ function* workerLoadCurrentUser() {
   }
 }
 
+function* workerRegister(action) {
+  try {
+    const response = yield call(register, action.payload)
+    const {access_token: accessToken, user} = response.data
+    
+    localStorage.setItem('token', accessToken)
+    yield put(registerSuccess(user))
+  } catch (error) {
+    yield put(registerFailure())
+  }
+}
+
 export function* watchAuth() {
   yield takeEvery(LOGIN_REQUEST, workerLogin)
   yield takeEvery(LOGOUT_REQUEST, workerLogout)
   yield takeEvery(AUTH_CHECK_REQUEST, workerAuthCheck)
   yield takeEvery(LOAD_CURRENT_USER_REQUEST, workerLoadCurrentUser)
+  yield takeEvery(REGISTER_REQUEST, workerRegister)
 }
