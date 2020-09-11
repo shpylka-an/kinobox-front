@@ -7,10 +7,12 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
-import { StyledTypography } from './styled'
+import Typography from '@material-ui/core/Typography'
 import { logoutRequest } from '../../actions/auth'
+import { useStyles } from './styles'
 
 const NavBar = ({ location }) => {
+  const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState(null)
   const { isLoggedIn, currentUser } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
@@ -38,9 +40,14 @@ const NavBar = ({ location }) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <StyledTypography component={Link} to={'/'} variant="h6">
+        <Typography
+          className={classes.title}
+          component={Link}
+          to={'/'}
+          variant="h6"
+        >
           Kinobox
-        </StyledTypography>
+        </Typography>
         <NavLink to="/" title="Home" />
         <NavLink to="/admin" title="Admin" />
         {!isLoggedIn && <NavLink to="/login" title="Login" />}

@@ -2,7 +2,6 @@ import React from 'react'
 import { Link as RouterLink, Redirect } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
-
 import Checkbox from '@material-ui/core/Checkbox'
 import Container from '@material-ui/core/Container'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -10,13 +9,15 @@ import Grid from '@material-ui/core/Grid'
 import Link from '@material-ui/core/Link'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
-
-import { StyledPaper, StyledForm, StyledSubmitButton } from './styled'
+import Paper from '@material-ui/core/Paper'
+import Button from '@material-ui/core/Button'
 
 import { loginRequest } from '../../../actions/auth'
 import { getValidationErrors } from '../../../utils/validation'
+import { useStyles } from './styles'
 
 const LoginPage = () => {
+  const classes = useStyles()
   const { isLoggedIn, isFetching, errors } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
@@ -36,11 +37,15 @@ const LoginPage = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-      <StyledPaper>
+      <Paper className={classes.paper}>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <StyledForm noValidate onSubmit={formik.handleSubmit}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={formik.handleSubmit}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -72,7 +77,8 @@ const LoginPage = () => {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <StyledSubmitButton
+          <Button
+            className={classes.submit}
             type="submit"
             fullWidth
             variant="contained"
@@ -80,7 +86,7 @@ const LoginPage = () => {
             disabled={isFetching}
           >
             Sign in
-          </StyledSubmitButton>
+          </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
@@ -93,8 +99,8 @@ const LoginPage = () => {
               </Link>
             </Grid>
           </Grid>
-        </StyledForm>
-      </StyledPaper>
+        </form>
+      </Paper>
     </Container>
   )
 }
