@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Toolbar from '@material-ui/core/Toolbar'
 import AppBar from '@material-ui/core/AppBar'
 import { logoutRequest } from '../../actions/auth'
@@ -8,10 +8,12 @@ import MenuItem from '@material-ui/core/MenuItem'
 import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
-import { StyledTypography } from './styled'
-
+import { Typography } from '@material-ui/core'
+import { useStyles } from './styles'
 
 const AdminNavBar = () => {
+  const classes = useStyles()
+
   const [anchorEl, setAnchorEl] = useState(null)
   const dispatch = useDispatch()
 
@@ -30,15 +32,16 @@ const AdminNavBar = () => {
   }
 
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
-        <StyledTypography
+        <Typography
+          className={classes.title}
           component={Link}
           to={'/'}
           variant="h6"
         >
           Kinobox dashboard
-        </StyledTypography>
+        </Typography>
         <div>
           <IconButton
             aria-label="account of current user"
@@ -54,17 +57,19 @@ const AdminNavBar = () => {
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: 'top',
-              horizontal: 'right'
+              horizontal: 'right',
             }}
             keepMounted
             transformOrigin={{
               vertical: 'top',
-              horizontal: 'right'
+              horizontal: 'right',
             }}
             open={open}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose} component={Link} to='/'>Go to site</MenuItem>
+            <MenuItem onClick={handleClose} component={Link} to="/">
+              Go to site
+            </MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>

@@ -8,7 +8,7 @@ const myDataProvider = {
   ...dataProvider,
   create: (resource, params) => {
     if (!params.data.preview && !params.data.video) {
-      return dataProvider.update(resource, params)
+      return dataProvider.create(resource, params)
     }
 
     const formData = new FormData()
@@ -19,7 +19,7 @@ const myDataProvider = {
     }
 
     if (params.data.video) {
-      formData.append('video', params.data.video.rawFile)
+      formData.append('movie', params.data.video.rawFile)
       delete params.data.video
     }
 
@@ -27,9 +27,11 @@ const myDataProvider = {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
+    }).then(() => {
+      alert('Uploaded')
     })
 
-    return dataProvider.update(resource, params)
+    return dataProvider.create(resource, params)
   },
 }
 

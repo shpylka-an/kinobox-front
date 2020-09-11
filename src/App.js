@@ -8,7 +8,6 @@ import { authCheckRequest } from './actions/auth'
 import store from './store'
 import { ConnectedRouter } from 'connected-react-router'
 import history from './reactAdmin/history'
-import resources from './reactAdmin/resources'
 import {
   AuthContext,
   DataProviderContext,
@@ -42,6 +41,7 @@ const App = () => (
               <ConnectedRouter history={history}>
                 <Resource name="movies" intent="registration" />
                 <Routes />
+                <Notification />
               </ConnectedRouter>
             </DataProviderContext.Provider>
           </AuthContext.Provider>

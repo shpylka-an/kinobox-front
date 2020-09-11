@@ -12,7 +12,7 @@ import {
 
 const MoviesCreate = (props) => {
   return (
-    <Create {...props}>
+    <Create {...props} resource="movies" basePath="/movies">
       <SimpleForm>
         <TextInput source="title" />
         <TextInput source="slug" />

@@ -9,6 +9,7 @@ import Index from '../pages/admin'
 import RouteWrapper from './RouteWrapper'
 import AdminLayout from '../layouts/AdminLayout'
 import MoviesList from '../pages/admin/movies/List'
+import MoviesCreate from '../pages/admin/movies/Create'
 
 export default () => (
   <Switch>
@@ -26,8 +27,14 @@ export default () => (
       exact
     />
     <RouteWrapper
-      path="/dashboard/movies"
+      path="/movies"
       component={MoviesList}
+      layout={AdminLayout}
+      exact
+    />
+    <RouteWrapper
+      path="/movies/create"
+      component={MoviesCreate}
       layout={AdminLayout}
       exact
     />
