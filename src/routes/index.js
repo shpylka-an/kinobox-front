@@ -10,7 +10,10 @@ import RouteWrapper from './RouteWrapper'
 import AdminLayout from '../layouts/AdminLayout'
 import MoviesList from '../pages/admin/movies/List'
 import MoviesCreate from '../pages/admin/movies/Create'
+import MoviesEdit from '../pages/admin/movies/Edit'
 import NotFound from '../pages/web/notFound'
+import PrivateRoute from './PrivateRoute'
+import PrivateRouteWrapper from './PrivateRouteWrapper'
 
 export default () => (
   <Switch>
@@ -21,21 +24,27 @@ export default () => (
       layout={AdminLayout}
       exact
     />
-    <RouteWrapper
+    <PrivateRouteWrapper
       path="/profile"
       component={Profile}
       layout={DefaultLayout}
       exact
     />
-    <RouteWrapper
+    <PrivateRouteWrapper
       path="/dashboard/movies"
       component={MoviesList}
       layout={AdminLayout}
       exact
     />
-    <RouteWrapper
+    <PrivateRouteWrapper
       path="/dashboard/movies/create"
       component={MoviesCreate}
+      layout={AdminLayout}
+      exact
+    />
+    <PrivateRouteWrapper
+      path="/dashboard/movies/:id"
+      component={MoviesEdit}
       layout={AdminLayout}
       exact
     />
@@ -52,7 +61,7 @@ export default () => (
       exact
     />
 
-    <Route path="/404" component={NotFound} />
-    <Redirect to="/404" />
+    {/*<Route path="/404" component={NotFound} />*/}
+    {/*<Redirect to="/404" />*/}
   </Switch>
 )

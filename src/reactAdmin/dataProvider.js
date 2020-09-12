@@ -31,7 +31,9 @@ const myDataProvider = {
       alert('Uploaded')
     })
 
-    return dataProvider.create(resource, params)
+    return dataProvider.create(resource, params).then(response => {
+      console.log(response)
+    })
   },
 }
 

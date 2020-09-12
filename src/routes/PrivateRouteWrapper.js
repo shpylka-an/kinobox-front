@@ -1,16 +1,15 @@
 import React from 'react'
 import PrivateRoute from './PrivateRoute'
 
-const PrivateRouteWrapper = ({ component: Component, layout: Layout }, ...rest) => {
+const PrivateRouteWrapper = ({
+  component: Component,
+  layout: Layout,
+  ...rest
+}) => {
   return (
-    <PrivateRoute
-      {...rest}
-      render={(props) => (
-        <Layout {...props}>
-          <Component {...props} />
-        </Layout>
-      )}
-    />
+    <Layout>
+      <PrivateRoute component={Component} {...rest} />
+    </Layout>
   )
 }
 

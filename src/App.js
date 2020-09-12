@@ -33,7 +33,7 @@ const App = () => (
         <AuthContext.Provider value={authProvider}>
           <DataProviderContext.Provider value={dataProvider}>
             <ConnectedRouter history={history}>
-              <Resource name="movies" intent="registration" />
+              <Resource name="movies" hasEdit={true} intent="registration" />
               <Routes />
               <Notification />
             </ConnectedRouter>

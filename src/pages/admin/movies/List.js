@@ -1,5 +1,13 @@
 import React from 'react'
-import { Datagrid, List, TextField } from 'react-admin'
+import {
+  Datagrid,
+  DateField,
+  DeleteButton,
+  EditButton,
+  List,
+  TextField,
+} from 'react-admin'
+import MoviesEdit from './Edit'
 
 const MoviesList = (props) => {
   return (
@@ -7,7 +15,7 @@ const MoviesList = (props) => {
       {...props}
       resource="movies"
       basePath="/dashboard/movies"
-      hasShow
+      edit={<MoviesEdit />}
       hasCreate
       hasEdit
       hasList
@@ -15,6 +23,11 @@ const MoviesList = (props) => {
       <Datagrid>
         <TextField source="id" />
         <TextField source="title" />
+        <TextField source="slug" />
+        <DateField source="releaseDate" />
+
+        <EditButton />
+        <DeleteButton />
       </Datagrid>
     </List>
   )
