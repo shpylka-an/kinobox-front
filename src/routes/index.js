@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import HomePage from '../pages/web/home'
 import LoginPage from '../pages/web/login'
 import Profile from '../pages/web/profile/profile'
@@ -10,6 +10,7 @@ import RouteWrapper from './RouteWrapper'
 import AdminLayout from '../layouts/AdminLayout'
 import MoviesList from '../pages/admin/movies/List'
 import MoviesCreate from '../pages/admin/movies/Create'
+import NotFound from '../pages/web/notFound'
 
 export default () => (
   <Switch>
@@ -27,13 +28,13 @@ export default () => (
       exact
     />
     <RouteWrapper
-      path="/movies"
+      path="/dashboard/movies"
       component={MoviesList}
       layout={AdminLayout}
       exact
     />
     <RouteWrapper
-      path="/movies/create"
+      path="/dashboard/movies/create"
       component={MoviesCreate}
       layout={AdminLayout}
       exact
@@ -50,5 +51,8 @@ export default () => (
       layout={DefaultLayout}
       exact
     />
+
+    <Route path="/404" component={NotFound} />
+    <Redirect to="/404" />
   </Switch>
 )

@@ -6,7 +6,7 @@ const MoviesList = (props) => {
     <List
       {...props}
       resource="movies"
-      basePath="/movies"
+      basePath="/dashboard/movies"
       hasShow
       hasCreate
       hasEdit
