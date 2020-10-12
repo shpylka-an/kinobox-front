@@ -8,6 +8,7 @@ import {
   TextField,
 } from 'react-admin'
 import MoviesEdit from './Edit'
+import UploadMovieFiles from '../../../components/UploadMovieFiles'
 
 const MoviesList = (props) => {
   return (
@@ -26,6 +27,7 @@ const MoviesList = (props) => {
         <TextField source="slug" />
         <DateField source="releaseDate" />
 
+        <UploadMovieFiles />
         <EditButton />
         <DeleteButton />
       </Datagrid>

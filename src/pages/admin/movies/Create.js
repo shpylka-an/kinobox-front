@@ -4,26 +4,24 @@ import {
   DateInput,
   FileField,
   FileInput,
+  ImageField,
+  ImageInput,
   SimpleForm,
   TextInput,
-  ImageInput,
-  ImageField,
 } from 'react-admin'
 
 const MoviesCreate = (props) => {
   return (
-    <Create {...props} resource="movies" basePath="/movies">
+    <Create
+      {...props}
+      resource="movies"
+      basePath="/movies"
+    >
       <SimpleForm>
         <TextInput source="title" />
         <TextInput source="slug" />
         <TextInput source="description" />
         <DateInput source="releaseDate" defaultValue={new Date()} />
-        <ImageInput source="preview" label="Preview image" accept="image/*">
-          <ImageField source="src" title="title" />
-        </ImageInput>
-        <FileInput source="video" label="Video file">
-          <FileField source="src" title="title" />
-        </FileInput>
       </SimpleForm>
     </Create>
   )
