@@ -3,22 +3,24 @@ import { makeStyles } from '@material-ui/core/styles'
 import AdminNavBar from '../components/AdminNavBar'
 import AdminDrawer from '../components/AdminDrawer'
 import { drawerWidth } from '../components/AdminDrawer/AdminDrawer'
+import Resources from '../reactAdmin/resources'
 
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing(3),
-    marginLeft: `${drawerWidth}px`
+    marginLeft: `${drawerWidth}px`,
   },
   toolbar: theme.mixins.toolbar,
-}));
+}))
 
-const AdminLayout = ({children}) => {
-  const classes = useStyles();
+const AdminLayout = ({ children }) => {
+  const classes = useStyles()
 
   return (
     <div>
+      <Resources />
       <AdminNavBar />
       <main className={classes.content}>
         <div className={classes.toolbar} />

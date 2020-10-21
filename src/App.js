@@ -9,7 +9,6 @@ import {
   AuthContext,
   DataProviderContext,
   Notification,
-  Resource,
   TranslationProvider,
 } from 'react-admin'
 
@@ -33,7 +32,6 @@ const App = () => (
         <AuthContext.Provider value={authProvider}>
           <DataProviderContext.Provider value={dataProvider}>
             <ConnectedRouter history={history}>
-              <Resource name="movies" hasEdit={true} intent="registration" />
               <Routes />
               <Notification />
             </ConnectedRouter>

@@ -1,14 +1,11 @@
-import * as reactAdmin from 'ra-core'
-import store from '../store'
+import React from 'react'
+import { Resource } from 'react-admin'
 
-export default () => {
-  store.dispatch(
-    reactAdmin.registerResource({
-      name: 'movies',
-      hasList: true,
-      hasEdit: true,
-      hasShow: true,
-      hasCreate: true,
-    })
-  )
-}
+const Resources = () => (
+  <>
+    <Resource name="movies" hasEdit={true} intent="registration" />
+    {/*<Resource name="movies" hasEdit={true} intent="registration" />*/}
+  </>
+)
+
+export default Resources
