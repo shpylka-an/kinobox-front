@@ -1,37 +1,103 @@
-import React from 'react'
-import {
-  Datagrid,
-  DateField,
-  DeleteButton,
-  EditButton,
-  List,
-  TextField,
-} from 'react-admin'
-import MoviesEdit from './Edit'
-import UploadMovieFiles from '../../../components/UploadMovieFiles'
+import React, { useEffect } from 'react'
+import MUIDataTable from 'mui-datatables'
+import { useDispatch, useSelector } from 'react-redux'
+import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
+import EditIcon from '@material-ui/icons/Edit'
+import DeleteIcon from '@material-ui/icons/Delete'
+import { Link } from 'react-router-dom'
+import { fetchMoviesRequest } from '../../../actions/movies'
 
-const MoviesList = (props) => {
+const MoviesList = () => {
+  const dispatch = useDispatch()
+  const { movies } = useSelector((state) => state.movies)
+
+  useEffect(() => {
+    dispatch(fetchMoviesRequest())
+  }, [])
+
+  const columns = [
+    {
+      name: 'id',
+      label: 'ID',
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: 'title',
+      label: 'Title',
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'description',
+      label: 'Sescription',
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'releaseDate',
+      label: 'Release date',
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'Edit',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button color="primary" startIcon={<EditIcon />}>
+              Edit
+            </Button>
+          )
+        },
+      },
+    },
+    {
+      name: 'Delete',
+      options: {
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <Button color="secondary" startIcon={<DeleteIcon />}>
+              Delete
+            </Button>
+          )
+        },
+      },
+    },
+  ]
+
+  const options = {
+    filterType: 'dropdown',
+    customToolbar: () => {
+      return (
+        <Button
+          color="primary"
+          startIcon={<AddIcon />}
+          component={Link}
+          to="movies/create"
+        >
+          Create
+        </Button>
+      )
+    },
+  }
+
   return (
-    <List
-      {...props}
-      resource="movies"
-      basePath="/dashboard/movies"
-      edit={<MoviesEdit />}
-      hasCreate
-      hasEdit
-      hasList
-    >
-      <Datagrid>
-        <TextField source="id" />
-        <TextField source="title" />
-        <TextField source="slug" />
-        <DateField source="releaseDate" />
-
-        <UploadMovieFiles />
-        <EditButton />
-        <DeleteButton />
-      </Datagrid>
-    </List>
+    <MUIDataTable
+      title="Movies List"
+      data={movies}
+      columns={columns}
+      options={options}
+    />
   )
 }
 

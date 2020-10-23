@@ -1,5 +1,7 @@
 import { watchAuth } from './auth'
+import { watchMovies } from './movies'
 
 export default [
-  watchAuth
+  watchAuth,
+  watchMovies
 ]
