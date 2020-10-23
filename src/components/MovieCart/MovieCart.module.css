@@ -1,0 +1,14 @@
+.preview {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.preview:hover {
+    cursor: pointer;
+}
+
+.cart {
+    transition: .2s;
+    display: flex;
+}
