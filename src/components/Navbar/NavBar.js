@@ -9,7 +9,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import Typography from '@material-ui/core/Typography'
 
-import { logoutRequest } from '../../actions/auth'
+import { logoutRequest } from '../../modules/auth/actions'
 import { useStyles } from './styles'
 
 const NavBar = ({ location }) => {

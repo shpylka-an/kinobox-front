@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import Toolbar from '@material-ui/core/Toolbar'
 import AppBar from '@material-ui/core/AppBar'
-import { logoutRequest } from '../../actions/auth'
 import MenuItem from '@material-ui/core/MenuItem'
 import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import { Typography } from '@material-ui/core'
+import { logoutRequest } from '../../modules/auth/actions'
 import { useStyles } from './styles'
 
 const AdminNavBar = () => {
