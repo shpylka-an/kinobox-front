@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import AdminNavBar from '../components/AdminNavBar'
 import AdminDrawer from '../components/AdminDrawer'
 import { drawerWidth } from '../components/AdminDrawer/AdminDrawer'
-import Resources from '../reactAdmin/resources'
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -20,7 +19,6 @@ const AdminLayout = ({ children }) => {
 
   return (
     <div>
-      <Resources />
       <AdminNavBar />
       <main className={classes.content}>
         <div className={classes.toolbar} />
