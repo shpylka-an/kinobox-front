@@ -1,7 +1,7 @@
 import {
   CREATE_MOVIE_REQUEST,
   FETCH_MOVIES_REQUEST,
-  FETCH_MOVIES_SUCCESS,
+  FETCH_MOVIES_SUCCESS, UPLOAD_MOVIE_REQUEST
 } from './action-types'
 
 export const fetchMoviesRequest = () => ({

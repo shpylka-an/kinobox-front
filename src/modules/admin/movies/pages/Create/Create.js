@@ -6,6 +6,9 @@ import { useFormik } from 'formik'
 import Button from '@material-ui/core/Button'
 import { useDispatch } from 'react-redux'
 import { createMovieRequest } from '../../actions'
+import Dropzone from '../../../../../components/Dropzone'
+import { useDropzone } from 'react-dropzone'
+import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,8 +21,9 @@ const useStyles = makeStyles((theme) => ({
   form: {
     '& .MuiTextField-root': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: '100%',
     },
+    width: '100%',
   },
 }))
 
@@ -27,12 +31,34 @@ const MoviesCreate = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
 
+  const previewDropzone = useDropzone({
+    accept: 'image/*',
+    multiple: false,
+    onDrop: (acceptedFiles) => {
+      formik.setFieldValue('files.preview', acceptedFiles[0])
+    },
+  })
+
+  const videoFileDropzone = useDropzone({
+    accept: 'video/*',
+    multiple: false,
+    onDrop: (acceptedFiles) => {
+      formik.setFieldValue('files.videoFile', acceptedFiles[0])
+    },
+  })
+
   const formik = useFormik({
     initialValues: {
-      title: '',
-      description: '',
-      slug: '',
-      releaseDate: '2017-05-24',
+      data: {
+        title: '',
+        description: '',
+        slug: '',
+        releaseDate: '2017-05-24',
+      },
+      files: {
+        preview: null,
+        videoFile: null
+      }
     },
     onSubmit: (values) => {
       dispatch(createMovieRequest(values))
@@ -47,50 +73,58 @@ const MoviesCreate = () => {
         noValidate
         autoComplete="off"
       >
+        <Grid container spacing={5}>
+          <Grid item xs={6}>
+            <div>
+              <TextField
+                label="Title"
+                name="data.title"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                value={formik.values.data.title}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Description"
+                name="data.description"
+                multiline
+                rows={4}
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                value={formik.values.data.description}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Slug"
+                name="data.slug"
+                variant="outlined"
+                size="small"
+                onChange={formik.handleChange}
+                value={formik.values.data.slug}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Release Date"
+                name="data.releaseDate"
+                type="date"
+                size="small"
+                onChange={formik.handleChange}
+                value={formik.values.data.releaseDate}
+              />
+            </div>
+          </Grid>
+          <Grid item xs={6}>
+            <Dropzone {...previewDropzone} />
+            <Dropzone {...videoFileDropzone} />
+          </Grid>
+        </Grid>
         <div>
-          <TextField
-            label="Title"
-            name="title"
-            variant="outlined"
-            size="small"
-            onChange={formik.handleChange}
-            value={formik.values.title}
-          />
-        </div>
-        <div>
-          <TextField
-            label="Description"
-            name="description"
-            multiline
-            rows={4}
-            variant="outlined"
-            size="small"
-            onChange={formik.handleChange}
-            value={formik.values.description}
-          />
-        </div>
-        <div>
-          <TextField
-            label="Slug"
-            name="slug"
-            variant="outlined"
-            size="small"
-            onChange={formik.handleChange}
-            value={formik.values.slug}
-          />
-        </div>
-        <div>
-          <TextField
-            label="Release Date"
-            name="releaseDate"
-            type='date'
-            size="small"
-            onChange={formik.handleChange}
-            value={formik.values.releaseDate}
-          />
-        </div>
-        <div>
-          <Button type='submit' variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary">
             Save
           </Button>
         </div>
