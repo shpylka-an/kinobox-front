@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Drawer from '@material-ui/core/Drawer'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AdminDrawer = () => {
   const classes = useStyles()
+  const location = useLocation()
 
   return (
     <>
@@ -35,7 +36,13 @@ const AdminDrawer = () => {
         <div className={classes.toolbar} />
         <List>
           {menuList.map(({ title, href, icon: Icon }, index) => (
-            <ListItem component={Link} to={href} button key={index}>
+            <ListItem
+              selected={href === location.pathname}
+              component={Link}
+              to={href}
+              button
+              key={index}
+            >
               <ListItemIcon>
                 <Icon />
               </ListItemIcon>
