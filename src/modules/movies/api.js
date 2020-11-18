@@ -1,4 +1,4 @@
-import Http from '../../../utils/Http'
+import Http from '../../utils/Http'
 
 export function fetchAllMovies() {
   return Http.get('movies')

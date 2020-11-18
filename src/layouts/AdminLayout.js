@@ -1,8 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import AdminNavBar from '../components/AdminNavBar'
-import AdminDrawer from '../components/AdminDrawer'
-import { drawerWidth } from '../components/AdminDrawer/AdminDrawer'
+import AdminNavBar from '../common/AdminNavBar'
+import AdminDrawer from '../common/AdminDrawer'
+import { drawerWidth } from '../common/AdminDrawer/AdminDrawer'
 
 const useStyles = makeStyles((theme) => ({
   content: {

@@ -1,7 +1,7 @@
 import React from 'react'
 
 const MoviesEdit = () => {
-  return <div></div>
+  return <div>Edit</div>
 }
 
 export default MoviesEdit

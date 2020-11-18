@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper'
 import { useFormik } from 'formik'
 import Button from '@material-ui/core/Button'
 import { useDispatch, useSelector } from 'react-redux'
-import Dropzone from '../../../../../components/Dropzone'
 import { useDropzone } from 'react-dropzone'
 import Grid from '@material-ui/core/Grid'
 import Autocomplete from '@material-ui/lab/Autocomplete'
@@ -15,6 +14,8 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
+import Dropzone from '../../../../common/Dropzone'
+import { fetchDirectorsRequest } from '../../../directors/actions'
 
 const ratings = ['TV-MA', 'TV-14', 'TV-PG', 'R', 'PG-13']
 
@@ -24,9 +25,11 @@ const MoviesCreate = () => {
 
   useEffect(() => {
     dispatch(fetchActorsRequest())
+    dispatch(fetchDirectorsRequest())
   }, [])
 
   const { actors } = useSelector((state) => state.actors)
+  const { directors } = useSelector((state) => state.directors)
 
   const previewDropzone = useDropzone({
     accept: 'image/*',
@@ -52,11 +55,11 @@ const MoviesCreate = () => {
         slug: '',
         releaseDate: '2017-05-24',
         rating: '',
-        duration: 0
+        duration: 0,
       },
       relationships: {
         actors: [],
-        directors: [1],
+        directors: [],
       },
       files: {
         preview: null,
@@ -117,10 +120,7 @@ const MoviesCreate = () => {
                 value={formik.values.attributes.releaseDate}
               />
             </div>
-            <FormControl
-              className={classes.formControl}
-              size="small"
-            >
+            <FormControl className={classes.formControl} size="small">
               <InputLabel>Rating</InputLabel>
               <Select
                 name="attributes.rating"
@@ -148,9 +148,30 @@ const MoviesCreate = () => {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    size="small"
                     label="Actors"
-                    placeholder="Favorites"
+                    placeholder="Select actors"
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <Autocomplete
+                multiple
+                options={directors}
+                getOptionLabel={(option) =>
+                  `${option.firstName} ${option.lastName}`
+                }
+                onChange={(e, value) => {
+                  formik.setFieldValue(
+                    'relationships.directors',
+                    value.map((v) => v.id)
+                  )
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Directors"
+                    placeholder="Select directors"
                   />
                 )}
               />

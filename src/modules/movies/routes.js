@@ -1,7 +1,7 @@
 import List from './pages/List'
 import Create from './pages/Create'
 import Edit from './pages/Edit'
-import AdminLayout from '../../../layouts/AdminLayout'
+import AdminLayout from '../../layouts/AdminLayout'
 
 export default [
   {

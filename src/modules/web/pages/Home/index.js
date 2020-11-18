@@ -1,5 +1,5 @@
 import React from 'react'
-import MoviesCarousel from '../../../../components/MoviesCarousel'
+import MoviesCarousel from '../../../../common/MoviesCarousel'
 
 const HomePage = () => {
   return (

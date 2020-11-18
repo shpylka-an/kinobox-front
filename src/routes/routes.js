@@ -1,9 +1,9 @@
 import authRoutes from '../modules/auth/routes'
-import adminRoutes from '../modules/admin/routes'
+import moviesRoutes from '../modules/movies/routes'
 import webRoutes from '../modules/web/routes'
 
 export default [
   ...authRoutes,
-  ...adminRoutes,
+  ...moviesRoutes,
   ...webRoutes,
 ]

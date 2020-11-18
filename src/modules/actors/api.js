@@ -1,4 +1,4 @@
-import Http from '../../../utils/Http'
+import Http from '../../utils/Http'
 
 function fetchAllActors() {
   return Http.get('actors')
