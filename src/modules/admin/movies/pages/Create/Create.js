@@ -1,35 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TextField from '@material-ui/core/TextField'
 import Paper from '@material-ui/core/Paper'
-import { makeStyles } from '@material-ui/core/styles'
 import { useFormik } from 'formik'
 import Button from '@material-ui/core/Button'
-import { useDispatch } from 'react-redux'
-import { createMovieRequest } from '../../actions'
+import { useDispatch, useSelector } from 'react-redux'
 import Dropzone from '../../../../../components/Dropzone'
 import { useDropzone } from 'react-dropzone'
 import Grid from '@material-ui/core/Grid'
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import { fetchActorsRequest } from '../../../actors/actions'
+import { useStyles } from './styles'
+import { createMovieRequest } from '../../actions'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    '& > *': {
-      margin: theme.spacing(2),
-    },
-  },
-  form: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '100%',
-    },
-    width: '100%',
-  },
-}))
+const ratings = ['TV-MA', 'TV-14', 'TV-PG', 'R', 'PG-13']
 
 const MoviesCreate = () => {
   const classes = useStyles()
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchActorsRequest())
+  }, [])
+
+  const { actors } = useSelector((state) => state.actors)
 
   const previewDropzone = useDropzone({
     accept: 'image/*',
@@ -49,16 +46,22 @@ const MoviesCreate = () => {
 
   const formik = useFormik({
     initialValues: {
-      data: {
+      attributes: {
         title: '',
         description: '',
         slug: '',
         releaseDate: '2017-05-24',
+        rating: '',
+        duration: 0
+      },
+      relationships: {
+        actors: [],
+        directors: [1],
       },
       files: {
         preview: null,
-        videoFile: null
-      }
+        videoFile: null,
+      },
     },
     onSubmit: (values) => {
       dispatch(createMovieRequest(values))
@@ -78,43 +81,87 @@ const MoviesCreate = () => {
             <div>
               <TextField
                 label="Title"
-                name="data.title"
-                variant="outlined"
+                name="attributes.title"
                 size="small"
                 onChange={formik.handleChange}
-                value={formik.values.data.title}
+                value={formik.values.attributes.title}
               />
             </div>
             <div>
               <TextField
                 label="Description"
-                name="data.description"
+                name="attributes.description"
                 multiline
                 rows={4}
-                variant="outlined"
                 size="small"
                 onChange={formik.handleChange}
-                value={formik.values.data.description}
+                value={formik.values.attributes.description}
               />
             </div>
             <div>
               <TextField
                 label="Slug"
-                name="data.slug"
-                variant="outlined"
+                name="attributes.slug"
                 size="small"
                 onChange={formik.handleChange}
-                value={formik.values.data.slug}
+                value={formik.values.attributes.slug}
               />
             </div>
             <div>
               <TextField
                 label="Release Date"
-                name="data.releaseDate"
+                name="attributes.releaseDate"
                 type="date"
                 size="small"
                 onChange={formik.handleChange}
-                value={formik.values.data.releaseDate}
+                value={formik.values.attributes.releaseDate}
+              />
+            </div>
+            <FormControl
+              className={classes.formControl}
+              size="small"
+            >
+              <InputLabel>Rating</InputLabel>
+              <Select
+                name="attributes.rating"
+                value={formik.values.attributes.rating}
+                onChange={formik.handleChange}
+              >
+                {ratings.map((rating) => (
+                  <MenuItem value={rating}>{rating}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <div>
+              <Autocomplete
+                multiple
+                options={actors}
+                getOptionLabel={(option) =>
+                  `${option.firstName} ${option.lastName}`
+                }
+                onChange={(e, value) => {
+                  formik.setFieldValue(
+                    'relationships.actors',
+                    value.map((v) => v.id)
+                  )
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    size="small"
+                    label="Actors"
+                    placeholder="Favorites"
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <TextField
+                type="number"
+                label="Duration"
+                name="attributes.duration"
+                value={formik.values.attributes.duration}
+                onChange={formik.handleChange}
               />
             </div>
           </Grid>

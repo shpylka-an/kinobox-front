@@ -77,6 +77,8 @@ const MoviesList = () => {
 
   const options = {
     filterType: 'dropdown',
+    download: false,
+    print: false,
     customToolbar: () => {
       return (
         <Button

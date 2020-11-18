@@ -14,9 +14,9 @@ function* workerFetchMovies() {
 }
 
 function* workerCreateMovie(action) {
-  const { data, files } = action.payload
+  const { attributes, relationships, files } = action.payload
   try {
-    const response = yield call(createNewMovie, data)
+    const response = yield call(createNewMovie, { attributes, relationships })
     yield call(uploadMovie, response.data.id, files)
   } catch (error) {
     console.log(error)
