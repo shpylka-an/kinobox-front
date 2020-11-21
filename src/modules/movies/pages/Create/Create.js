@@ -17,7 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Dropzone from '../../../../common/Dropzone'
 import { fetchDirectorsRequest } from '../../../directors/actions'
 
-const ratings = ['TV-MA', 'TV-14', 'TV-PG', 'R', 'PG-13']
+export const ratings = ['TV-MA', 'TV-14', 'TV-PG', 'R', 'PG-13']
 
 const MoviesCreate = () => {
   const classes = useStyles()
@@ -26,7 +26,7 @@ const MoviesCreate = () => {
   useEffect(() => {
     dispatch(fetchActorsRequest())
     dispatch(fetchDirectorsRequest())
-  }, [])
+  }, [dispatch])
 
   const { actors } = useSelector((state) => state.actors)
   const { directors } = useSelector((state) => state.directors)

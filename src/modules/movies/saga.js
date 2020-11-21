@@ -1,13 +1,26 @@
 import { call, put, takeEvery } from 'redux-saga/effects'
-import { createNewMovie, fetchAllMovies, uploadMovie } from './api'
-import { fetchMoviesSuccess } from './actions'
-import { CREATE_MOVIE_REQUEST, FETCH_MOVIES_REQUEST } from './action-types'
+import { createNewMovie, fetchAllMovies, getMovie, uploadMovie } from './api'
+import { fetchMoviesSuccess, fetchMovieSuccess } from './actions'
+import {
+  CREATE_MOVIE_REQUEST,
+  FETCH_MOVIE_REQUEST,
+  FETCH_MOVIES_REQUEST,
+} from './action-types'
 
-function* workerFetchMovies() {
+function* workerFetchMovies(action) {
   try {
-    const response = yield call(fetchAllMovies)
+    const response = yield call(fetchAllMovies, action.payload)
     console.log(response)
     yield put(fetchMoviesSuccess(response.data))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+function* workerFetchMovie(action) {
+  try {
+    const response = yield call(getMovie, action.payload)
+    yield put(fetchMovieSuccess(response.data))
   } catch (error) {
     console.log(error)
   }
@@ -25,5 +38,6 @@ function* workerCreateMovie(action) {
 
 export function* watchMovies() {
   yield takeEvery(FETCH_MOVIES_REQUEST, workerFetchMovies)
+  yield takeEvery(FETCH_MOVIE_REQUEST, workerFetchMovie)
   yield takeEvery(CREATE_MOVIE_REQUEST, workerCreateMovie)
 }

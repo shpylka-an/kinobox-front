@@ -10,18 +10,22 @@ import { fetchMoviesRequest } from '../../actions'
 
 const MoviesList = () => {
   const dispatch = useDispatch()
-  const { movies } = useSelector((state) => state.movies)
+  const { movies, count } = useSelector((state) => state.movies)
 
   useEffect(() => {
     dispatch(fetchMoviesRequest())
   }, [dispatch])
+
+  const changePage = (page, sortOrder) => {
+    dispatch(fetchMoviesRequest({ page: page + 1 }))
+  }
 
   const columns = [
     {
       name: 'id',
       label: 'ID',
       options: {
-        filter: true,
+        filter: false,
         sort: true,
       },
     },
@@ -29,15 +33,15 @@ const MoviesList = () => {
       name: 'title',
       label: 'Title',
       options: {
-        filter: true,
-        sort: false,
+        filter: false,
+        sort: true,
       },
     },
     {
       name: 'description',
       label: 'Sescription',
       options: {
-        filter: true,
+        filter: false,
         sort: false,
       },
     },
@@ -52,9 +56,17 @@ const MoviesList = () => {
     {
       name: 'Edit',
       options: {
+        filter: false,
+        sort: false,
         customBodyRender: (value, tableMeta, updateValue) => {
+          const id = tableMeta.rowData[0]
           return (
-            <Button color="primary" startIcon={<EditIcon />}>
+            <Button
+              component={Link}
+              to={`movies/${id}`}
+              color="primary"
+              startIcon={<EditIcon />}
+            >
               Edit
             </Button>
           )
@@ -64,6 +76,8 @@ const MoviesList = () => {
     {
       name: 'Delete',
       options: {
+        filter: false,
+        sort: false,
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <Button color="secondary" startIcon={<DeleteIcon />}>
@@ -76,9 +90,10 @@ const MoviesList = () => {
   ]
 
   const options = {
-    filterType: 'dropdown',
     download: false,
     print: false,
+    serverSide: true,
+    count,
     customToolbar: () => {
       return (
         <Button
@@ -90,6 +105,15 @@ const MoviesList = () => {
           Create
         </Button>
       )
+    },
+    onTableChange: (action, tableState) => {
+      switch (action) {
+        case 'changePage':
+          changePage(tableState.page, tableState.sortOrder)
+          break
+        default:
+          console.log('action not handled.')
+      }
     },
   }
 
