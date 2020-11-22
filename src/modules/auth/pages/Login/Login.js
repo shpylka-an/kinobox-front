@@ -12,13 +12,13 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 
-import { loginRequest } from '../../actions'
 import { getValidationErrors } from '../../../../utils/validation'
 import { useStyles } from './styles'
+import { login } from '../../slice'
 
 const Login = () => {
   const classes = useStyles()
-  const { isLoggedIn, isLoginFetching, loginErrors } = useSelector(
+  const { isLoggedIn, isLoading, errors } = useSelector(
     (state) => state.auth
   )
   const dispatch = useDispatch()
@@ -28,13 +28,13 @@ const Login = () => {
       email: '',
       password: '',
     },
-    onSubmit: (values) => {
-      dispatch(loginRequest(values))
+    onSubmit: (credentials) => {
+      dispatch(login({credentials}))
     },
   })
 
   if (isLoggedIn) {
-    return <Redirect to="/profile" />
+    return <Redirect to="/" />
   }
 
   return (
@@ -58,8 +58,8 @@ const Login = () => {
             autoFocus
             onChange={formik.handleChange}
             value={formik.values.email}
-            error={!!getValidationErrors(loginErrors, 'email')}
-            helperText={getValidationErrors(loginErrors, 'email')}
+            error={!!getValidationErrors(errors, 'email')}
+            helperText={getValidationErrors(errors, 'email')}
           />
           <TextField
             variant="outlined"
@@ -72,8 +72,8 @@ const Login = () => {
             autoComplete="current-password"
             onChange={formik.handleChange}
             value={formik.values.password}
-            error={!!getValidationErrors(loginErrors, 'password')}
-            helperText={getValidationErrors(loginErrors, 'password')}
+            error={!!getValidationErrors(errors, 'password')}
+            helperText={getValidationErrors(errors, 'password')}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -85,7 +85,7 @@ const Login = () => {
             fullWidth
             variant="contained"
             color="primary"
-            disabled={isLoginFetching}
+            disabled={isLoading}
           >
             Sign in
           </Button>

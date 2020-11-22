@@ -7,15 +7,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useDropzone } from 'react-dropzone'
 import Grid from '@material-ui/core/Grid'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { fetchActorsRequest } from '../../../actors/actions'
 import { useStyles } from './styles'
-import { createMovieRequest } from '../../actions'
 import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Dropzone from '../../../../common/Dropzone'
-import { fetchDirectorsRequest } from '../../../directors/actions'
+import { fetchActors } from '../../../actors/slice'
+import { fetchDirectors } from '../../../directors/slice'
+import { createMovie } from '../../slice'
 
 export const ratings = ['TV-MA', 'TV-14', 'TV-PG', 'R', 'PG-13']
 
@@ -24,8 +24,8 @@ const MoviesCreate = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchActorsRequest())
-    dispatch(fetchDirectorsRequest())
+    dispatch(fetchActors())
+    dispatch(fetchDirectors())
   }, [dispatch])
 
   const { actors } = useSelector((state) => state.actors)
@@ -67,7 +67,7 @@ const MoviesCreate = () => {
       },
     },
     onSubmit: (values) => {
-      dispatch(createMovieRequest(values))
+      dispatch(createMovie(values))
     },
   })
 

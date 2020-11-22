@@ -6,18 +6,18 @@ import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { Link } from 'react-router-dom'
-import { fetchMoviesRequest } from '../../actions'
+import { fetchMovies } from '../../slice'
 
 const MoviesList = () => {
   const dispatch = useDispatch()
   const { movies, count } = useSelector((state) => state.movies)
 
   useEffect(() => {
-    dispatch(fetchMoviesRequest())
+    dispatch(fetchMovies({}))
   }, [dispatch])
 
   const changePage = (page, sortOrder) => {
-    dispatch(fetchMoviesRequest({ page: page + 1 }))
+    dispatch(fetchMovies({ queryParams: { page: page + 1 } }))
   }
 
   const columns = [

@@ -10,10 +10,11 @@ import Link from '@material-ui/core/Link'
 import Paper from '@material-ui/core/Paper'
 
 import useStyles from './styles'
-import { registerRequest } from '../../actions'
+import { register } from '../../slice'
+import { getValidationErrors } from '../../../../utils/validation'
 
 const Register = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth)
+  const { isLoggedIn, errors } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
 
   const classes = useStyles()
@@ -26,12 +27,12 @@ const Register = () => {
       passwordConfirmation: '',
     },
     onSubmit: (values) => {
-      dispatch(registerRequest(values))
+      dispatch(register({registerData: values}))
     },
   })
 
   if (isLoggedIn) {
-    return <Redirect to="/profile" />
+    return <Redirect to="/" />
   }
 
   return (
@@ -55,6 +56,8 @@ const Register = () => {
             autoFocus
             onChange={formik.handleChange}
             value={formik.values.username}
+            error={!!getValidationErrors(errors, 'username')}
+            helperText={getValidationErrors(errors, 'username')}
           />
           <TextField
             variant="outlined"
@@ -65,6 +68,8 @@ const Register = () => {
             name="email"
             onChange={formik.handleChange}
             value={formik.values.email}
+            error={!!getValidationErrors(errors, 'email')}
+            helperText={getValidationErrors(errors, 'email')}
           />
           <TextField
             variant="outlined"
@@ -76,6 +81,8 @@ const Register = () => {
             type="password"
             onChange={formik.handleChange}
             value={formik.values.password}
+            error={!!getValidationErrors(errors, 'password')}
+            helperText={getValidationErrors(errors, 'password')}
           />
           <TextField
             variant="outlined"
@@ -87,6 +94,8 @@ const Register = () => {
             type="password"
             onChange={formik.handleChange}
             value={formik.values.passwordConfirmation}
+            error={!!getValidationErrors(errors, 'passwordConfirmation')}
+            helperText={getValidationErrors(errors, 'passwordConfirmation')}
           />
           <Button
             variant="contained"

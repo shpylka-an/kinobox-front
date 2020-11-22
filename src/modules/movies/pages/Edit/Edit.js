@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { fetchMovieRequest } from '../../actions'
 import Paper from '@material-ui/core/Paper'
 import { useStyles } from './styles'
 import { useFormik } from 'formik'
@@ -13,9 +12,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import { ratings } from '../Create/Create'
 import Autocomplete from '@material-ui/lab/Autocomplete'
-import { fetchActorsRequest } from '../../../actors/actions'
-import { fetchDirectorsRequest } from '../../../directors/actions'
 import Button from '@material-ui/core/Button'
+import { fetchMovie } from '../../slice'
+import { fetchActors } from '../../../actors/slice'
+import { fetchDirectors } from '../../../directors/slice'
 
 const MoviesEdit = () => {
   const dispatch = useDispatch()
@@ -23,9 +23,9 @@ const MoviesEdit = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    dispatch(fetchMovieRequest(id))
-    dispatch(fetchActorsRequest())
-    dispatch(fetchDirectorsRequest())
+    dispatch(fetchMovie({id}))
+    dispatch(fetchActors())
+    dispatch(fetchDirectors())
   }, [dispatch, id])
 
   const { movie } = useSelector((state) => state.movies)

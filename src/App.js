@@ -4,13 +4,12 @@ import { BrowserRouter } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import Routes from './routes'
-import { authCheckRequest } from './modules/auth/actions'
-import configureStore from './store/configureStore'
+import store from './store'
+import { authCheck } from './modules/auth/slice'
 
 const theme = createMuiTheme()
-const store = configureStore()
 
-store.dispatch(authCheckRequest())
+store.dispatch(authCheck())
 
 const App = () => (
   <MuiThemeProvider theme={theme}>

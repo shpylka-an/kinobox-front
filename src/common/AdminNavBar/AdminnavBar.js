@@ -8,8 +8,8 @@ import IconButton from '@material-ui/core/IconButton'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import { Typography } from '@material-ui/core'
-import { logoutRequest } from '../../modules/auth/actions'
 import { useStyles } from './styles'
+import { logout } from '../../modules/auth/slice'
 
 const AdminNavBar = () => {
   const classes = useStyles()
@@ -28,7 +28,7 @@ const AdminNavBar = () => {
   }
 
   const handleLogout = () => {
-    dispatch(logoutRequest())
+    dispatch(logout())
   }
 
   return (

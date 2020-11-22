@@ -9,8 +9,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import Typography from '@material-ui/core/Typography'
 
-import { logoutRequest } from '../../modules/auth/actions'
 import { useStyles } from './styles'
+import { logout } from '../../modules/auth/slice'
 
 const NavBar = ({ location }) => {
   const classes = useStyles()
@@ -29,7 +29,7 @@ const NavBar = ({ location }) => {
   }
 
   const handleLogout = () => {
-    dispatch(logoutRequest())
+    dispatch(logout())
   }
 
   const NavLink = ({ to, title }) => (
