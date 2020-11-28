@@ -8,9 +8,12 @@ import MenuItem from '@material-ui/core/MenuItem'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Menu from '@material-ui/core/Menu'
 import Typography from '@material-ui/core/Typography'
-
+import SearchIcon from '@material-ui/icons/Search'
 import { useStyles } from './styles'
 import { logout } from '../../modules/auth/slice'
+import InputBase from '@material-ui/core/InputBase'
+import Badge from '@material-ui/core/Badge'
+import NotificationsIcon from '@material-ui/icons/Notifications'
 
 const NavBar = ({ location }) => {
   const classes = useStyles()
@@ -49,21 +52,42 @@ const NavBar = ({ location }) => {
         >
           Kinobox
         </Typography>
+        {isLoggedIn && (
+          <>
+            <NavLink to="/" title="Home" />
+            <NavLink to="/my-list" title="MyList" />
+          </>
+        )}
+        <div className={classes.grow} />
         {!isLoggedIn && (
           <>
             <NavLink to="/register" title="Sign up" />
             <NavLink to="/login" title="Sign in" />
           </>
         )}
+        {isLoggedIn && (
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
+        )}
         {currentUser && (
           <div>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
+            <IconButton color="inherit">
+              <Badge badgeContent={1} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton onClick={handleMenu} color="inherit">
               <AccountCircle />
             </IconButton>
             <Menu
