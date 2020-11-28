@@ -52,12 +52,9 @@ const MoviesCreate = () => {
       attributes: {
         title: '',
         description: '',
-        slug: '',
         releaseDate: '2017-05-24',
         rating: '',
         duration: 0,
-      },
-      relationships: {
         actors: [],
         directors: [],
       },
@@ -103,15 +100,6 @@ const MoviesCreate = () => {
             </div>
             <div>
               <TextField
-                label="Slug"
-                name="attributes.slug"
-                size="small"
-                onChange={formik.handleChange}
-                value={formik.values.attributes.slug}
-              />
-            </div>
-            <div>
-              <TextField
                 label="Release Date"
                 name="attributes.releaseDate"
                 type="date"
@@ -141,7 +129,7 @@ const MoviesCreate = () => {
                 }
                 onChange={(e, value) => {
                   formik.setFieldValue(
-                    'relationships.actors',
+                    'attributes.actors',
                     value.map((v) => v.id)
                   )
                 }}
@@ -163,7 +151,7 @@ const MoviesCreate = () => {
                 }
                 onChange={(e, value) => {
                   formik.setFieldValue(
-                    'relationships.directors',
+                    'attributes.directors',
                     value.map((v) => v.id)
                   )
                 }}

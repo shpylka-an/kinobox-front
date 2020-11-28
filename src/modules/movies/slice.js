@@ -27,9 +27,9 @@ export const fetchMovie = createAsyncThunk(
 
 export const createMovie = createAsyncThunk(
   'movies/create',
-  async ({attributes, relationships, files}, thunkAPI) => {
+  async ({attributes, files}, thunkAPI) => {
     try {
-      const response = await moviesApi.create({attributes, relationships})
+      const response = await moviesApi.create(attributes)
       await moviesApi.upload(response.data.id, files)
     } catch (error) {
       thunkAPI.rejectWithValue(false)

@@ -35,7 +35,6 @@ const MoviesEdit = () => {
       attributes: {
         title: '',
         description: '',
-        slug: '',
         releaseDate: '',
         rating: '',
         duration: 0,
@@ -98,15 +97,6 @@ const MoviesEdit = () => {
                 size="small"
                 onChange={formik.handleChange}
                 value={formik.values.attributes.description}
-              />
-            </div>
-            <div>
-              <TextField
-                label="Slug"
-                name="attributes.slug"
-                size="small"
-                onChange={formik.handleChange}
-                value={formik.values.attributes.slug}
               />
             </div>
             <div>

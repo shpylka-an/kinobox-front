@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { authApi } from './api'
+import Http from '../../utils/Http'
 
 export const login = createAsyncThunk(
   'auth/login',
@@ -8,6 +9,7 @@ export const login = createAsyncThunk(
       const response = await authApi.login(credentials)
       const { accessToken, user } = response.data
       localStorage.setItem('token', accessToken)
+      Http.defaults.headers.common.Authorization = `Bearer ${accessToken}`
 
       return user
     } catch (err) {
@@ -96,7 +98,7 @@ const authSlice = createSlice({
     },
     [register.fulfilled]: (state, action) => {
       state.isLoading = false
-      state.user = action.payload
+      state.currentUser = action.payload
       state.isLoggedIn = true
     },
     [register.rejected]: (state, action) => {

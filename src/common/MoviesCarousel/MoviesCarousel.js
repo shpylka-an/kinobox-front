@@ -3,13 +3,11 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation } from 'swiper'
 import MovieCart from '../MovieCart'
 import 'swiper/swiper-bundle.css'
-import preview from './breaking-bad.webp'
-import soul from './soul.jpg'
 import { Link } from 'react-router-dom'
 
 SwiperCore.use([Navigation])
 
-const MoviesCarousel = ({ title }) => {
+const MoviesCarousel = ({ title, movies }) => {
   return (
     <div>
       <h2>{title}</h2>
@@ -37,28 +35,13 @@ const MoviesCarousel = ({ title }) => {
           },
         }}
       >
-        <SwiperSlide>
-          <Link to="/movies/123">
-            <MovieCart preview={preview} />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Link to="/movies/1233">
-            <MovieCart preview={soul} />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCart preview={preview} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCart preview={preview} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCart preview={preview} />
-        </SwiperSlide>
-        <SwiperSlide>
-          <MovieCart preview={preview} />
-        </SwiperSlide>
+        {movies.map((movie) => (
+          <SwiperSlide key={movie.id}>
+            <Link to={`/movies/${movie.id}`}>
+              <MovieCart preview={movie.preview.url} />
+            </Link>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   )
