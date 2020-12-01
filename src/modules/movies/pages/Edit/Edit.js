@@ -64,8 +64,8 @@ const MoviesEdit = () => {
       formik.setFieldValue('attributes.releaseDate', movie.releaseDate)
       formik.setFieldValue('attributes.rating', movie.rating)
       formik.setFieldValue('attributes.duration', movie.duration)
-      formik.setFieldValue('relationships.actors', movie.cast)
-      formik.setFieldValue('relationships.directors', movie.directors)
+      formik.setFieldValue('attributes.actors', movie.cast)
+      formik.setFieldValue('attributes.directors', movie.directors)
     }
   }, [movie])
 
@@ -129,7 +129,7 @@ const MoviesEdit = () => {
                   `${option.firstName} ${option.lastName}`
                 }
                 onChange={(e, value) => {
-                  formik.setFieldValue('relationships.actors', value)
+                  formik.setFieldValue('attributes.actors', value)
                 }}
                 value={formik.values.relationships.actors}
                 renderInput={(params) => (
@@ -149,7 +149,7 @@ const MoviesEdit = () => {
                   `${option.firstName} ${option.lastName}`
                 }
                 onChange={(e, value) => {
-                  formik.setFieldValue('relationships.directors', value)
+                  formik.setFieldValue('attributes.directors', value)
                 }}
                 value={formik.values.relationships.directors}
                 renderInput={(params) => (
@@ -171,7 +171,7 @@ const MoviesEdit = () => {
               />
             </div>
           </Grid>
-          <Grid item xs={6}></Grid>
+          <Grid item xs={6}/>
         </Grid>
         <div>
           <Button type="submit" variant="contained" color="primary">

@@ -55,7 +55,7 @@ const NavBar = ({ location }) => {
         {isLoggedIn && (
           <>
             <NavLink to="/" title="Home" />
-            <NavLink to="/my-list" title="MyList" />
+            <NavLink to="/my-list" title="My List" />
           </>
         )}
         <div className={classes.grow} />

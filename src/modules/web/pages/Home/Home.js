@@ -18,7 +18,7 @@ const HomePage = () => {
         ? suggestedMovies.map((item) => (
           <MoviesCarousel
             key={item.title}
-            title={item.title}
+            title={item.name}
             movies={item.items}
           />
         ))

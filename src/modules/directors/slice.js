@@ -5,7 +5,7 @@ export const fetchDirectors = createAsyncThunk(
   'directors/all',
   async (_, thunkAPI) => {
     try {
-      const response = await directorsApi.fetchAll()
+      const response = await directorsApi.getAll()
       return response.data
     } catch (err) {
       return thunkAPI.rejectWithValue(false)

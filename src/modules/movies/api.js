@@ -20,5 +20,8 @@ export const moviesApi = {
         'Content-Type': 'multipart/form-data'
       }
     })
+  },
+  remove(id) {
+    return Http.delete(`movies/${id}`)
   }
 }

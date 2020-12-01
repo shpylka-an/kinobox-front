@@ -6,7 +6,9 @@ import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 import { Link } from 'react-router-dom'
-import { fetchMovies } from '../../slice'
+import { fetchMovies, removeMovie } from '../../slice'
+import Chip from '@material-ui/core/Chip'
+import Switch from '@material-ui/core/Switch'
 
 const MoviesList = () => {
   const dispatch = useDispatch()
@@ -15,6 +17,15 @@ const MoviesList = () => {
   useEffect(() => {
     dispatch(fetchMovies({}))
   }, [dispatch])
+
+  const handleDelete = (id) => {
+    dispatch(removeMovie({ id }))
+  }
+
+  const handleSwitchIsPublished = (id, prevValue) => {
+    // dispatch(movieSwitchIsPublished({id}))
+    console.log({id, prevValue})
+  }
 
   const changePage = (page, sortOrder) => {
     dispatch(fetchMovies({ queryParams: { page: page + 1 } }))
@@ -39,7 +50,7 @@ const MoviesList = () => {
     },
     {
       name: 'description',
-      label: 'Sescription',
+      label: 'Description',
       options: {
         filter: false,
         sort: false,
@@ -54,11 +65,43 @@ const MoviesList = () => {
       },
     },
     {
+      name: 'isPublished',
+      label: 'Is Published',
+      options: {
+        filter: true,
+        sort: false,
+        customBodyRender: (value, tableMeta) => {
+          const id = tableMeta.rowData[0]
+          return (
+            <Switch
+              checked={value}
+              color="primary"
+              onChange={(e) => handleSwitchIsPublished(id, value)}
+            />
+          )
+        },
+      },
+    },
+    {
+      name: 'directors',
+      label: 'Director',
+      options: {
+        customBodyRender: (directors) => {
+          return directors.map((director) => (
+            <Chip
+              label={`${director.firstName} ${director.lastName}`}
+              key={director.id}
+            />
+          ))
+        },
+      },
+    },
+    {
       name: 'Edit',
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (value, tableMeta, updateValue) => {
+        customBodyRender: (value, tableMeta) => {
           const id = tableMeta.rowData[0]
           return (
             <Button
@@ -78,9 +121,14 @@ const MoviesList = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (value, tableMeta, updateValue) => {
+        customBodyRender: (value, tableMeta) => {
+          const id = tableMeta.rowData[0]
           return (
-            <Button color="secondary" startIcon={<DeleteIcon />}>
+            <Button
+              color="secondary"
+              startIcon={<DeleteIcon />}
+              onClick={() => handleDelete(id)}
+            >
               Delete
             </Button>
           )
