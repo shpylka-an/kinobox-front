@@ -51,16 +51,14 @@ export const removeMovie = createAsyncThunk(
 
 export const updateMovie = createAsyncThunk(
   'movies/update',
-  async ({data}, thunkAPI) => {
-
-  }
+  async ({ data }, thunkAPI) => {}
 )
 
 const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
     isLoading: false,
-    movies: [],
+    movies: null,
     movie: null,
     count: 0,
   },
@@ -70,9 +68,7 @@ const moviesSlice = createSlice({
       state.isLoading = true
     },
     [fetchMovies.fulfilled]: (state, action) => {
-      const { items, count } = action.payload
-      state.movies = items
-      state.count = count
+      state.movies = action.payload
     },
     [fetchMovie.pending]: (state) => {
       state.isLoading = true
@@ -80,6 +76,12 @@ const moviesSlice = createSlice({
     [fetchMovie.fulfilled]: (state, action) => {
       state.isLoading = false
       state.movie = action.payload
+    },
+    [removeMovie.fulfilled]: (state, action) => {
+      const index = state.movies.items.findIndex((movie) => {
+        return movie.id === action.payload.id
+      })
+      state.movies.items.splice(index, 1)
     },
   },
 })

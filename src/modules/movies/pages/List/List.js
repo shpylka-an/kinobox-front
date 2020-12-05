@@ -12,7 +12,7 @@ import Switch from '@material-ui/core/Switch'
 
 const MoviesList = () => {
   const dispatch = useDispatch()
-  const { movies, count } = useSelector((state) => state.movies)
+  const { movies } = useSelector((state) => state.movies)
 
   useEffect(() => {
     dispatch(fetchMovies({}))
@@ -23,7 +23,6 @@ const MoviesList = () => {
   }
 
   const handleSwitchIsPublished = (id, prevValue) => {
-    // dispatch(movieSwitchIsPublished({id}))
     console.log({id, prevValue})
   }
 
@@ -141,7 +140,7 @@ const MoviesList = () => {
     download: false,
     print: false,
     serverSide: true,
-    count,
+    count: movies?.meta.totalItems,
     customToolbar: () => {
       return (
         <Button
@@ -165,10 +164,14 @@ const MoviesList = () => {
     },
   }
 
+  if (!movies) {
+    return 'Loading'
+  }
+
   return (
     <MUIDataTable
       title="Movies List"
-      data={movies}
+      data={movies.items}
       columns={columns}
       options={options}
     />
