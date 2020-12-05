@@ -8,6 +8,6 @@ export const authApi = {
     return Http.post('auth/register', credentials)
   },
   me() {
-    return Http.get('me')
+    return Http.get('users/me')
   }
 }

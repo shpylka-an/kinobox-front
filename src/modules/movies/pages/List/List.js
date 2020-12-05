@@ -26,7 +26,7 @@ const MoviesList = () => {
     console.log({id, prevValue})
   }
 
-  const changePage = (page, sortOrder) => {
+  const changePage = (page) => {
     dispatch(fetchMovies({ queryParams: { page: page + 1 } }))
   }
 
@@ -141,6 +141,7 @@ const MoviesList = () => {
     print: false,
     serverSide: true,
     count: movies?.meta.totalItems,
+    confirmFilters: true,
     customToolbar: () => {
       return (
         <Button
@@ -154,12 +155,8 @@ const MoviesList = () => {
       )
     },
     onTableChange: (action, tableState) => {
-      switch (action) {
-        case 'changePage':
-          changePage(tableState.page, tableState.sortOrder)
-          break
-        default:
-          console.log('action not handled.')
+      if (action === 'changePage') {
+        changePage(tableState.page, tableState.sortOrder)
       }
     },
   }
