@@ -1,14 +1,185 @@
-.preview {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
+.CardContainer {
+  position: relative;
+  height: 180px;
+  width: 100%;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
-.preview:hover {
-    cursor: pointer;
+.CardContainer.toLeft {
+  justify-content: flex-end;
 }
 
-.cart {
-    transition: .2s;
-    display: flex;
+.CardContainer.toRight {
+  justify-content: flex-start;
+}
+
+.Card {
+  position: absolute;
+  height: 180px;
+  width: 100%;
+  background-color: rgb(60, 60, 60);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.CardHover {
+  width: 130%;
+  height: 160%;
+  z-index: 10;
+}
+
+.CardHover .CardControl {
+  bottom: 0;
+}
+
+.CardHover .CardImage {
+  transform: scale(1.1);
+}
+
+.CardImage {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center center;
+  transition: 0.2s;
+}
+
+.CardControl {
+  position: absolute;
+  background-color: rgb(60, 60, 60);
+  height: 130px;
+  bottom: -130px;
+  width: 100%;
+  padding: 15px 20px;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+.CardButtons {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+.left__buttons {
+  display: flex;
+}
+
+.CardButtonContainer {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  margin-right: 7px;
+  border: 1px solid white;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.CardButtonContainer:last-child {
+  margin-right: 0;
+}
+
+.CardButtonIcon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.CardButtonIconPlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
+.CardButtonIconPlay .CardButtonIconImage {
+  height: 15px;
+  width: 18px;
+  padding-left: 2px;
+}
+
+.CardButtonIconImage {
+  height: 15px;
+  width: 15px;
+}
+
+.CardContainerText {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  color: rgb(211, 211, 211);
+}
+
+.CardContainerText:last-child {
+  margin-top: 5px;
+}
+
+.CardContainerName {
+  font-size: 18px;
+}
+
+.CardContainerRating {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgb(0, 226, 117);
+  margin-bottom: 1px;
+  padding: 5px;
+  border: 1px solid rgb(0, 226, 117);
+}
+
+.CardContainerYear {
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.card__control__text {
+  display: flex;
+  align-items: center;
+  margin-top: 13px;
+}
+
+.text__procent {
+  font-size: 10px;
+  font-weight: bold;
+  color: rgb(0, 226, 117);
+  margin-right: 5px;
+}
+
+.text__seasons {
+  font-size: 10px;
+  font-weight: bold;
+  color: rgb(211, 211, 211);
+}
+
+.text__years {
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px 0 2px;
+  margin-left: 5px;
+  font-size: 10px;
+  color: rgb(211, 211, 211);
+  border: 1px solid;
+}
+
+.card__text_bottom {
+  font-size: 11px;
+  color: rgb(211, 211, 211);
+  margin-top: 6px;
 }

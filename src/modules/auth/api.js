@@ -9,5 +9,5 @@ export const authApi = {
   },
   me() {
     return Http.get('users/me')
-  }
+  },
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography'
 import SearchIcon from '@material-ui/icons/Search'
 import { useStyles } from './styles'
 import { logout } from '../../modules/auth/slice'
+import { searchMovies, setSearch } from '../../modules/movies/slice'
 import InputBase from '@material-ui/core/InputBase'
 import Badge from '@material-ui/core/Badge'
 import NotificationsIcon from '@material-ui/icons/Notifications'
@@ -22,6 +23,18 @@ const NavBar = ({ location }) => {
   const dispatch = useDispatch()
 
   const open = Boolean(anchorEl)
+
+  const searchHandler = (e) => {
+    dispatch(setSearch(e.target.value))
+    dispatch(searchMovies({ queryParams: { search: e.target.value } }))
+  }
+
+  useEffect(() => {
+    return () => {
+      dispatch(setSearch(null))
+    }
+    // eslint-disable-next-line
+  }, [])
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget)
@@ -77,6 +90,7 @@ const NavBar = ({ location }) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={searchHandler}
             />
           </div>
         )}

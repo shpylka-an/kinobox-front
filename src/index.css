@@ -1,0 +1,152 @@
+body {
+  overflow-x: hidden;
+}
+
+.loader__container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.small__loader {
+  width: 100vw;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-container {
+  overflow: visible !important;
+}
+
+.carousel__grid {
+  display: grid;
+  column-gap: 10px;
+  row-gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+/* 
+.card_disactive {
+  position: relative;
+  height: 130px;
+  width: 260px;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  position: absolute;
+  height: 130px;
+  width: 260px;
+  background-color: rgb(60, 60, 60);
+  border-radius: 5px;
+  overflow: hidden;
+  transition: 0.2s;
+}
+
+.card:hover {
+  width: 350px;
+  height: 290px;
+  z-index: 10;
+}
+
+.card:hover .card__img {
+  height: 200px;
+}
+
+.card__img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: url('https://www.kolesa.ru/uploads/bnnews/2015/07/13/0478bbdefabe5a6d973a90762aefae7f.jpg');
+  background-size: cover;
+  transition: 0.2s;
+}
+
+.card__control {
+  padding: 10px 13px;
+}
+
+.card__buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.left__buttons {
+  display: flex;
+}
+
+.card__button-circle {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  margin-right: 7px;
+  border: 1px solid white;
+  box-sizing: border-box;
+}
+
+.card__button-circle:last-child {
+  margin-right: 0;
+}
+
+.card__button-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__button-icon2 {
+  height: 15px;
+  width: 15px;
+  padding-left: 3px;
+  filter: invert(1);
+}
+
+.card__control__text {
+  display: flex;
+  align-items: center;
+  margin-top: 13px;
+}
+
+.text__procent {
+  font-size: 10px;
+  font-weight: bold;
+  color: rgb(0, 226, 117);
+  margin-right: 5px;
+}
+
+.text__seasons {
+  font-size: 10px;
+  font-weight: bold;
+  color: rgb(211, 211, 211);
+}
+
+.text__years {
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px 0 2px;
+  margin-left: 5px;
+  font-size: 10px;
+  color: rgb(211, 211, 211);
+  border: 1px solid;
+}
+
+.card__text_bottom {
+  font-size: 11px;
+  color: rgb(211, 211, 211);
+  margin-top: 6px;
+} */
