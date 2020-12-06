@@ -13,6 +13,58 @@ export const fetchMovies = createAsyncThunk(
   }
 )
 
+export const fetchMoviesList = createAsyncThunk(
+  'movies/list',
+  // eslint-disable-next-line
+  async ({}, thunkAPI) => {
+    try {
+      const response = await moviesApi.getList()
+      return response.data
+    } catch (error) {
+      thunkAPI.rejectWithValue(false)
+    }
+  }
+)
+
+export const searchMovies = createAsyncThunk(
+  'movies/search',
+  // eslint-disable-next-line
+  async ({ queryParams = {} }, thunkAPI) => {
+    try {
+      const response = await moviesApi.fetchAll(queryParams)
+      return response.data
+    } catch (error) {
+      thunkAPI.rejectWithValue(false)
+    }
+  }
+)
+
+export const addToList = createAsyncThunk(
+  'movies/addToList',
+  async ({ id }, thunkAPI) => {
+    try {
+      const response = await moviesApi.addToList(id)
+      thunkAPI.dispatch(fetchMoviesList({}))
+      return response.data
+    } catch (error) {
+      thunkAPI.rejectWithValue(false)
+    }
+  }
+)
+
+export const removeFromList = createAsyncThunk(
+  'movies/removeFromList',
+  async ({ id }, thunkAPI) => {
+    try {
+      const response = await moviesApi.removeFromList(id)
+      thunkAPI.dispatch(fetchMoviesList({}))
+      return response.data
+    } catch (error) {
+      thunkAPI.rejectWithValue(false)
+    }
+  }
+)
+
 export const fetchMovie = createAsyncThunk(
   'movies/one',
   async ({ id }, thunkAPI) => {
@@ -59,13 +111,37 @@ const moviesSlice = createSlice({
   initialState: {
     isLoading: false,
     movies: null,
+    listLoading: false,
+    moviesList: null,
     movie: null,
+    search: '',
+    searchList: null,
     count: 0,
   },
-  reducers: {},
+  reducers: {
+    setSearch(state, action) {
+      state.search = action.payload
+    },
+  },
   extraReducers: {
     [fetchMovies.pending]: (state) => {
       state.isLoading = true
+    },
+    [fetchMovies.fulfilled]: (state, action) => {
+      state.movies = action.payload
+    },
+    [searchMovies.pending]: (state) => {
+      //state.isLoading = true
+    },
+    [searchMovies.fulfilled]: (state, action) => {
+      state.searchList = action.payload
+    },
+    [fetchMoviesList.fulfilled]: (state, action) => {
+      state.moviesList = action.payload
+      state.listLoading = false
+    },
+    [fetchMoviesList.pending]: (state) => {
+      state.listLoading = true
     },
     [fetchMovies.fulfilled]: (state, action) => {
       state.movies = action.payload
@@ -86,4 +162,5 @@ const moviesSlice = createSlice({
   },
 })
 
+export const { setSearch } = moviesSlice.actions
 export default moviesSlice.reducer

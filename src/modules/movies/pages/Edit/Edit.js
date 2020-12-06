@@ -23,7 +23,7 @@ const MoviesEdit = () => {
   const { id } = useParams()
 
   useEffect(() => {
-    dispatch(fetchMovie({id}))
+    dispatch(fetchMovie({ id }))
     dispatch(fetchActors())
     dispatch(fetchDirectors())
   }, [dispatch, id])
@@ -67,6 +67,7 @@ const MoviesEdit = () => {
       formik.setFieldValue('attributes.actors', movie.cast)
       formik.setFieldValue('attributes.directors', movie.directors)
     }
+    // eslint-disable-next-line
   }, [movie])
 
   return (
@@ -171,7 +172,7 @@ const MoviesEdit = () => {
               />
             </div>
           </Grid>
-          <Grid item xs={6}/>
+          <Grid item xs={6} />
         </Grid>
         <div>
           <Button type="submit" variant="contained" color="primary">

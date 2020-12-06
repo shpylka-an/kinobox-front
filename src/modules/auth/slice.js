@@ -57,12 +57,9 @@ export const register = createAsyncThunk(
   }
 )
 
-export const logout = createAsyncThunk(
-  'auth/logout',
-  async () => {
-    localStorage.removeItem('token')
-  }
-)
+export const logout = createAsyncThunk('auth/logout', async () => {
+  localStorage.removeItem('token')
+})
 
 const authSlice = createSlice({
   name: 'auth',
@@ -70,7 +67,7 @@ const authSlice = createSlice({
     isLoggedIn: false,
     currentUser: null,
     errors: null,
-    isLoading: false,
+    isLoading: true,
   },
   reducers: {},
   extraReducers: {
@@ -88,10 +85,12 @@ const authSlice = createSlice({
     },
     [authCheck.fulfilled]: (state, action) => {
       state.isLoggedIn = true
+      state.isLoading = false
       state.currentUser = action.payload
     },
     [authCheck.rejected]: (state) => {
       state.isLoggedIn = false
+      state.isLoading = false
     },
     [register.pending]: (state) => {
       state.isLoading = true
@@ -108,10 +107,10 @@ const authSlice = createSlice({
     [logout.fulfilled]: (state) => {
       state.isLoggedIn = false
       state.currentUser = null
-    }
+    },
   },
 })
 
 export default authSlice.reducer
-
+// eslint-disable-next-line
 export const {} = authSlice.actions

@@ -16,12 +16,12 @@ const HomePage = () => {
     <div style={{ padding: '0 10px' }}>
       {suggestedMovies
         ? suggestedMovies.map((item) => (
-          <MoviesCarousel
-            key={item.title}
-            title={item.name}
-            movies={item.items}
-          />
-        ))
+            <MoviesCarousel
+              key={item.name}
+              title={item.name}
+              movies={item.items}
+            />
+          ))
         : 'Loading'}
     </div>
   )
