@@ -50,7 +50,7 @@ const MoviesCarousel = ({ title, movies }) => {
         {movies.map((movie, i) => (
           <SwiperSlide key={movie.id}>
             <MovieCart
-              preview={movie.preview.url}
+              preview={movie?.preview?.url}
               title={movie.title}
               rating={movie.rating}
               id={movie.id}
